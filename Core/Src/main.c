@@ -14,8 +14,8 @@ void main(void) {
     SYSTEM_set_tick_callback(tick_callback);
     SYSTEM_set_tank_millivolts_callback(tank_callback);
 
-    sm_handle_event(pumpfsm, CALENDAR_START);
-
+    //sm_handle_event(pumpfsm, EV_BUTTON_PUSH, NULL);
+    sm_handle_event(pumpfsm, EV_BATT_LEVEL, "low");
     uint32_t a = HAL_RCC_GetHCLKFreq();
 
     LCD_writeLine1(a);

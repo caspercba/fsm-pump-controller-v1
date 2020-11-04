@@ -39,7 +39,7 @@ static sm_context_t name##_context =             \
 #define sm_get_private_data(c) (c)->priv
 
 #define sm_define_handle_event(name) \
-void name##_handle_event(name##_event_e ev) \
+void name##_handle_event(name##_event_e ev, void* data) \
 { sm_context_t *c = &name##_context; \
   c->event = (ev);                   \
   c->handler[c->event * name##_STATE_COUNT + c->state](c); \
@@ -47,9 +47,9 @@ void name##_handle_event(name##_event_e ev) \
   }
 
 #define sm_declare_handle_event(name) \
-void name##_handle_event(name##_event_e ev)
+void name##_handle_event(name##_event_e ev, void *data)
 
-#define sm_handle_event(name, ev) name##_handle_event(ev)
+#define sm_handle_event(name, ev, data) name##_handle_event(ev, data)
 
 
 
