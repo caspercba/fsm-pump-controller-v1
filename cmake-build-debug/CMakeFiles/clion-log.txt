@@ -1,4 +1,4 @@
-/usr/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/g/CLionProjects/fsm-pump-controller-v1
+/usr/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/gaspar/CLionProjects/fsm-pump-controller-v1
 -- The C compiler identification is GNU 10.2.0
 -- The CXX compiler identification is GNU 10.2.0
 -- The ASM compiler identification is GNU
@@ -16,4 +16,4 @@
 -- Minimal optimization, debug info included
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/g/CLionProjects/fsm-pump-controller-v1/cmake-build-debug
+-- Build files have been written to: /home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug

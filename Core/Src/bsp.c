@@ -49,6 +49,7 @@ typedef struct {
     str_gpio led_error;
     str_gpio led_activity;
     str_gpio led_pump_run;
+    str_gpio led_auto_on;
     void (*callback_button) (uint8_t btn, uint8_t evt);
     void (*callback_tank_volts) (void (*func) (uint32_t mVolts));
     void (*callback_tick) (void);
@@ -58,6 +59,7 @@ str_system system = {
         {{GPIO_PIN_0, GPIOA},   // BTN_TYPE_START
          {GPIO_PIN_3, GPIOA},   // BTN_TYPE_STOP
          {GPIO_PIN_3, GPIOA}},  // BTN_TYPE_AUTO
+        {GPIO_PIN_2, GPIOA},
         {GPIO_PIN_2, GPIOA},
         {GPIO_PIN_2, GPIOA},
         {GPIO_PIN_2, GPIOA},
@@ -102,6 +104,13 @@ void SYSTEM_set_tank_millivolts_callback(void (*func) (uint32_t mVolts)) {
 }
 
 uint32_t SYSTEM_getEpoch() {
+
+}
+
+void SYSTEM_set_led_auto_on() {
+
+}
+void SYSTEM_set_led_auto_off() {
 
 }
 

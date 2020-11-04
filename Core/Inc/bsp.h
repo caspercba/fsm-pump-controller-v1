@@ -23,10 +23,12 @@ void SYSTEM_init();
 void SYSTEM_set_tick_callback(void (*func) (void));
 void SYSTEM_set_button_callback(void (*func) (uint8_t button, uint8_t evt));
 void SYSTEM_set_tank_millivolts_callback(void (*func) (uint32_t mVolts));
-uint32_t SYSTEM_get_batt_level();
-uint32_t SYSTEM_get_tank_level();
+void SYSTEM_get_batt_level();
+void SYSTEM_get_tank_level();
 uint32_t SYSTEM_getEpoch();
 struct tm SYSTEM_getTimeDate();
+void SYSTEM_set_led_auto_on();
+void SYSTEM_set_led_auto_off();
 
 
 

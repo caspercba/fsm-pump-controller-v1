@@ -18,7 +18,7 @@ void main(void) {
     sm_handle_event(pumpfsm, EV_BATT_LEVEL, "low");
     uint32_t a = HAL_RCC_GetHCLKFreq();
 
-    LCD_writeLine1(a);
+    //LCD_writeLine1(a);
 
     while (1) {
 
@@ -26,22 +26,24 @@ void main(void) {
 }
 
 void callback_button(uint8_t btn, uint8_t evt) {
-    uint8_t str[12];
-    sprintf(str, "BUTTON PRESS: %d", btn);
-    LCD_writeLine1(str);
+    sm_handle_event(pumpfsm, EV_BUTTON_PUSH, &btn);
+//    uint8_t str[12];
+//    sprintf(str, "BUTTON PRESS: %d", btn);
+//    LCD_writeLine1(str);
 }
 
 void tick_callback(void) {
-    struct tm time = SYSTEM_getTimeDate();
-    uint8_t str[12];
-    sprintf(str, "%02d:%02d:%02d", time.tm_hour, time.tm_min, time.tm_sec);
-    LCD_writeLine1(str);
-    sprintf(str, "%02d:%02d:%04d", time.tm_mday, time.tm_mon, time.tm_year);
-    LCD_writeLine2(str);
+    sm_handle_event(pumpfsm, EV_TIMER_TICK, NULL);
+//    struct tm time = SYSTEM_getTimeDate();
+//    uint8_t str[12];
+//    sprintf(str, "%02d:%02d:%02d", time.tm_hour, time.tm_min, time.tm_sec);
+//    LCD_writeLine1(str);
+//    sprintf(str, "%02d:%02d:%04d", time.tm_mday, time.tm_mon, time.tm_year);
+//    LCD_writeLine2(str);
 }
 
 void tank_callback(uint32_t mVolts) {
-
+    sm_handle_event(pumpfsm, EV_TANK_LEVEL, &mVolts);
 }
 
 

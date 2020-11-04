@@ -6,7 +6,7 @@
 #define FSM_PUMP_CONTROLLER_V1_SM_FRAMEWORK_H
 
 typedef struct sm_context sm_context_t;
-typedef void (*sm_handler_t) (sm_context_t *);
+typedef void (*sm_handler_t) (sm_context_t *, void *data);
 
 #define sm_declare_states(name, ...) \
 typedef enum {                       \
@@ -42,7 +42,7 @@ static sm_context_t name##_context =             \
 void name##_handle_event(name##_event_e ev, void* data) \
 { sm_context_t *c = &name##_context; \
   c->event = (ev);                   \
-  c->handler[c->event * name##_STATE_COUNT + c->state](c); \
+  c->handler[c->event * name##_STATE_COUNT + c->state](c, data); \
   return;                            \
   }
 
