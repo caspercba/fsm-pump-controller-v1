@@ -55,9 +55,9 @@ typedef struct {
 } str_system;
 
 str_system system = {
-        {{GPIO_PIN_3, GPIOA},
-         {GPIO_PIN_3, GPIOA},
-         {GPIO_PIN_3, GPIOA}},
+        {{GPIO_PIN_0, GPIOA},   // BTN_TYPE_START
+         {GPIO_PIN_3, GPIOA},   // BTN_TYPE_STOP
+         {GPIO_PIN_3, GPIOA}},  // BTN_TYPE_AUTO
         {GPIO_PIN_2, GPIOA},
         {GPIO_PIN_2, GPIOA},
         {GPIO_PIN_2, GPIOA},
@@ -136,7 +136,6 @@ static void getTimeDate(RTC_TimeTypeDef* currentTimeIn, RTC_DateTypeDef* current
     currTimeOut->tm_sec = currentTimeIn->Seconds;
     }
 }
-
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     for(int i = 0 ; i < BTN_TYPE_TOTAL ; i++) {
@@ -289,18 +288,19 @@ static void MX_ADC1_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
-    GPIO_InitTypeDef GPIO_InitStruct = {0};
 
     __HAL_RCC_GPIOA_CLK_ENABLE();
 
-    GPIO_InitStruct.Pin = GPIO_PIN_3;
-    GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
 
-    HAL_NVIC_SetPriority(EXTI3_IRQn, 0, 0); // <--- This and
-    HAL_NVIC_EnableIRQ(EXTI3_IRQn); // <--- this are what were missing for you.
+    GPIO_InitStruct.Pin = system.buttons[BTN_TYPE_START].pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+    GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
+    HAL_GPIO_Init(system.buttons[BTN_TYPE_START].gpioTypeDef, &GPIO_InitStruct);
+
+    HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0); // <--- This and
+    HAL_NVIC_EnableIRQ(EXTI0_IRQn); // <--- this are what were missing for you.
 }
 
 

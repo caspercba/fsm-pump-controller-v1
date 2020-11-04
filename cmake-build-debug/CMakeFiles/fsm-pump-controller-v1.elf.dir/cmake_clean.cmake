@@ -1,6 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/bsp.c.obj"
   "CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm.c.obj"
+  "CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm_v2.c.obj"
   "CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/lcdhitachi.c.obj"
   "CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj"
   "CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/stm32f4xx_hal_msp.c.obj"

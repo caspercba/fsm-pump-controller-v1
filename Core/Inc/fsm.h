@@ -21,7 +21,7 @@ sm_declare_states(pumpfsm,
                   IDLE,
                   STARTING,
                   RUNNING,
-                  ERROR);
+                  ERRO);
 sm_declare_events(pumpfsm,
                   CALENDAR_START,
                   CALENDAR_STOP,

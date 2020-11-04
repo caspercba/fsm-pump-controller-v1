@@ -102,9 +102,22 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm.c.s"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/fsm.c -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm.c.s
 
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm_v2.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm_v2.c.obj: ../Core/Src/fsm_v2.c
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm_v2.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm_v2.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/fsm_v2.c
+
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm_v2.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm_v2.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/fsm_v2.c > CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm_v2.c.i
+
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm_v2.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm_v2.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/fsm_v2.c -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm_v2.c.s
+
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/lcdhitachi.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/lcdhitachi.c.obj: ../Core/Src/lcdhitachi.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/lcdhitachi.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/lcdhitachi.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/lcdhitachi.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/lcdhitachi.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/lcdhitachi.c.i: cmake_force
@@ -117,7 +130,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/lcdhitachi.c.s: cmake_force
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Core/Src/main.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/main.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.i: cmake_force
@@ -130,7 +143,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.s: cmake_force
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/stm32f4xx_hal_msp.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/stm32f4xx_hal_msp.c.obj: ../Core/Src/stm32f4xx_hal_msp.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/stm32f4xx_hal_msp.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/stm32f4xx_hal_msp.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/stm32f4xx_hal_msp.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/stm32f4xx_hal_msp.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/stm32f4xx_hal_msp.c.i: cmake_force
@@ -143,7 +156,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/stm32f4xx_hal_msp.c.s: cmake_
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/stm32f4xx_it.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/stm32f4xx_it.c.obj: ../Core/Src/stm32f4xx_it.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/stm32f4xx_it.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/stm32f4xx_it.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/stm32f4xx_it.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/stm32f4xx_it.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/stm32f4xx_it.c.i: cmake_force
@@ -156,7 +169,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/stm32f4xx_it.c.s: cmake_force
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/syscalls.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/syscalls.c.obj: ../Core/Src/syscalls.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/syscalls.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/syscalls.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/syscalls.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/syscalls.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/syscalls.c.i: cmake_force
@@ -169,7 +182,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/syscalls.c.s: cmake_force
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/sysmem.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/sysmem.c.obj: ../Core/Src/sysmem.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/sysmem.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/sysmem.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/sysmem.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/sysmem.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/sysmem.c.i: cmake_force
@@ -182,7 +195,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/sysmem.c.s: cmake_force
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/system_stm32f4xx.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/system_stm32f4xx.c.obj: ../Core/Src/system_stm32f4xx.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/system_stm32f4xx.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/system_stm32f4xx.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/system_stm32f4xx.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/system_stm32f4xx.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/system_stm32f4xx.c.i: cmake_force
@@ -195,12 +208,12 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/system_stm32f4xx.c.s: cmake_f
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Startup/startup_stm32f407vgtx.s.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Startup/startup_stm32f407vgtx.s.obj: ../Core/Startup/startup_stm32f407vgtx.s
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building ASM object CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Startup/startup_stm32f407vgtx.s.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building ASM object CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Startup/startup_stm32f407vgtx.s.obj"
 	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Startup/startup_stm32f407vgtx.s.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Startup/startup_stm32f407vgtx.s
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.i: cmake_force
@@ -213,7 +226,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.c.i: cmake_force
@@ -226,7 +239,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc_ex.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc_ex.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc_ex.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc_ex.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc_ex.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc_ex.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc_ex.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc_ex.c.i: cmake_force
@@ -239,7 +252,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.i: cmake_force
@@ -252,7 +265,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.i: cmake_force
@@ -265,7 +278,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.i: cmake_force
@@ -278,7 +291,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.i: cmake_force
@@ -291,7 +304,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.i: cmake_force
@@ -304,7 +317,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.i: cmake_force
@@ -317,7 +330,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.i: cmake_force
@@ -330,7 +343,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.i: cmake_force
@@ -343,7 +356,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.i: cmake_force
@@ -356,7 +369,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.i: cmake_force
@@ -369,7 +382,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.i: cmake_force
@@ -382,7 +395,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.i: cmake_force
@@ -395,7 +408,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.i: cmake_force
@@ -408,7 +421,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_27) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.i: cmake_force
@@ -421,7 +434,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_28) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc.c.i: cmake_force
@@ -434,7 +447,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc_ex.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc_ex.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc_ex.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_29) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc_ex.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc_ex.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc_ex.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc_ex.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc_ex.c.i: cmake_force
@@ -447,7 +460,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_30) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c.i: cmake_force
@@ -460,7 +473,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_31) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.i: cmake_force
@@ -473,7 +486,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_32) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.i: cmake_force
@@ -486,7 +499,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.obj: CMakeFiles/fsm-pump-controller-v1.elf.dir/flags.make
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_33) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Building C object CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.obj"
 	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.obj -c /home/gaspar/CLionProjects/fsm-pump-controller-v1/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.i: cmake_force
@@ -501,6 +514,7 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32
 fsm__pump__controller__v1_elf_OBJECTS = \
 "CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/bsp.c.obj" \
 "CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm.c.obj" \
+"CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm_v2.c.obj" \
 "CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/lcdhitachi.c.obj" \
 "CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj" \
 "CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/stm32f4xx_hal_msp.c.obj" \
@@ -538,6 +552,7 @@ fsm__pump__controller__v1_elf_EXTERNAL_OBJECTS =
 
 fsm-pump-controller-v1.elf: CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/bsp.c.obj
 fsm-pump-controller-v1.elf: CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm.c.obj
+fsm-pump-controller-v1.elf: CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm_v2.c.obj
 fsm-pump-controller-v1.elf: CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/lcdhitachi.c.obj
 fsm-pump-controller-v1.elf: CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj
 fsm-pump-controller-v1.elf: CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/stm32f4xx_hal_msp.c.obj
@@ -571,7 +586,7 @@ fsm-pump-controller-v1.elf: CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/ST
 fsm-pump-controller-v1.elf: CMakeFiles/fsm-pump-controller-v1.elf.dir/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.obj
 fsm-pump-controller-v1.elf: CMakeFiles/fsm-pump-controller-v1.elf.dir/build.make
 fsm-pump-controller-v1.elf: CMakeFiles/fsm-pump-controller-v1.elf.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_34) "Linking C executable fsm-pump-controller-v1.elf"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_35) "Linking C executable fsm-pump-controller-v1.elf"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/fsm-pump-controller-v1.elf.dir/link.txt --verbose=$(VERBOSE)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building /home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/fsm-pump-controller-v1.hex"
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold "Building /home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/fsm-pump-controller-v1.bin"

@@ -49,7 +49,7 @@ sm_declare_state_machine(
         (uint32_t) no_action_handler,   // BATT_LEVEL_LOW
         (uint32_t) no_action_handler,   // STARTUP_TIME_DONE
         (uint32_t) no_action_handler,   // ERROR_WAIT_TIME_COMPLETE
-        ERROR,
+        ERRO,
         (uint32_t) no_action_handler, // CALENDAR_START
         (uint32_t) no_action_handler,   // CALENDAR_STOP
         (uint32_t) no_action_handler,  // MAXLEVEL_REACHED

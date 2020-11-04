@@ -27,6 +27,7 @@ set(CMAKE_ASM_TARGET_INCLUDE_PATH
 set(CMAKE_DEPENDS_CHECK_C
   "/home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/bsp.c" "/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/bsp.c.obj"
   "/home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/fsm.c" "/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm.c.obj"
+  "/home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/fsm_v2.c" "/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm_v2.c.obj"
   "/home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/lcdhitachi.c" "/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/lcdhitachi.c.obj"
   "/home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/main.c" "/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj"
   "/home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/stm32f4xx_hal_msp.c" "/home/gaspar/CLionProjects/fsm-pump-controller-v1/cmake-build-debug/CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/stm32f4xx_hal_msp.c.obj"

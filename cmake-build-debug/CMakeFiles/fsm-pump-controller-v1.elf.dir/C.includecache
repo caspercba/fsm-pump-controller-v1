@@ -16,14 +16,6 @@ time.h
 sm_framework.h
 ../Core/Inc/sm_framework.h
 
-../Core/Inc/lcdhitachi.h
-stm32f4xx_hal.h
-../Core/Inc/stm32f4xx_hal.h
-
-../Core/Inc/main.h
-stm32f4xx_hal.h
-../Core/Inc/stm32f4xx_hal.h
-
 ../Core/Inc/sm_framework.h
 
 ../Core/Inc/stm32f4xx_hal_conf.h
@@ -354,30 +346,6 @@ stm32f4xx_hal_def.h
 stm32f4xx_hal_def.h
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
 
-/home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/bsp.c
-memory.h
--
-stdio.h
--
-stm32f4xx_hal.h
-/home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/stm32f4xx_hal.h
-stm32f407xx.h
-/home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/stm32f407xx.h
-bsp.h
-/home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/bsp.h
-lcdhitachi.h
-/home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/lcdhitachi.h
-main.h
-/home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/main.h
-
-/home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/fsm.c
-stdint-gcc.h
--
-fsm.h
-/home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/fsm.h
-bsp.h
-/home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/bsp.h
-
 /home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/main.c
 stdio.h
 -
@@ -385,4 +353,6 @@ bsp.h
 /home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/bsp.h
 fsm.h
 /home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/fsm.h
+stm32f4xx_hal.h
+/home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/stm32f4xx_hal.h
 

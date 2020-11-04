@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "bsp.h"
 #include "fsm.h"
+#include "stm32f4xx_hal.h"
 
 void callback_button(uint8_t btn, uint8_t evt);
 void tick_callback(void);
@@ -15,13 +16,19 @@ void main(void) {
 
     sm_handle_event(pumpfsm, CALENDAR_START);
 
+    uint32_t a = HAL_RCC_GetHCLKFreq();
+
+    LCD_writeLine1(a);
+
     while (1) {
 
     }
 }
 
 void callback_button(uint8_t btn, uint8_t evt) {
-    //sm_handle_event(pumpfsm, CALENDAR_START);
+    uint8_t str[12];
+    sprintf(str, "BUTTON PRESS: %d", btn);
+    LCD_writeLine1(str);
 }
 
 void tick_callback(void) {

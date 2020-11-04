@@ -51,6 +51,10 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm.c.obj: ../Core/Inc/fsm.h
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm.c.obj: ../Core/Inc/sm_framework.h
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm.c.obj: ../Core/Src/fsm.c
 
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm_v2.c.obj: ../Core/Inc/bsp.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm_v2.c.obj: ../Core/Inc/fsm_v2.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm_v2.c.obj: ../Core/Src/fsm_v2.c
+
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/lcdhitachi.c.obj: ../Core/Inc/lcdhitachi.h
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/lcdhitachi.c.obj: ../Core/Inc/stm32f4xx_hal_conf.h
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/lcdhitachi.c.obj: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h
@@ -95,6 +99,44 @@ CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/lcdhitachi.c.obj: ../Core/Src
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Core/Inc/bsp.h
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Core/Inc/fsm.h
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Core/Inc/sm_framework.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Core/Inc/stm32f4xx_hal_conf.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/CMSIS/Include/cmsis_armcc.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/CMSIS/Include/cmsis_armclang.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/CMSIS/Include/cmsis_compiler.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/CMSIS/Include/cmsis_gcc.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/CMSIS/Include/cmsis_iccarm.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/CMSIS/Include/cmsis_version.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/CMSIS/Include/core_cm4.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/CMSIS/Include/mpu_armv7.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc_ex.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/main.c.obj: ../Core/Src/main.c
 
 CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/stm32f4xx_hal_msp.c.obj: ../Core/Inc/main.h

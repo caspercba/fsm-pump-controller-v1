@@ -196,6 +196,33 @@ Core/Src/fsm.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/fsm-pump-controller-v1.elf.dir/build.make CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm.c.s
 .PHONY : Core/Src/fsm.c.s
 
+Core/Src/fsm_v2.obj: Core/Src/fsm_v2.c.obj
+
+.PHONY : Core/Src/fsm_v2.obj
+
+# target to build an object file
+Core/Src/fsm_v2.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fsm-pump-controller-v1.elf.dir/build.make CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm_v2.c.obj
+.PHONY : Core/Src/fsm_v2.c.obj
+
+Core/Src/fsm_v2.i: Core/Src/fsm_v2.c.i
+
+.PHONY : Core/Src/fsm_v2.i
+
+# target to preprocess a source file
+Core/Src/fsm_v2.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fsm-pump-controller-v1.elf.dir/build.make CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm_v2.c.i
+.PHONY : Core/Src/fsm_v2.c.i
+
+Core/Src/fsm_v2.s: Core/Src/fsm_v2.c.s
+
+.PHONY : Core/Src/fsm_v2.s
+
+# target to generate assembly for a file
+Core/Src/fsm_v2.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/fsm-pump-controller-v1.elf.dir/build.make CMakeFiles/fsm-pump-controller-v1.elf.dir/Core/Src/fsm_v2.c.s
+.PHONY : Core/Src/fsm_v2.c.s
+
 Core/Src/lcdhitachi.obj: Core/Src/lcdhitachi.c.obj
 
 .PHONY : Core/Src/lcdhitachi.obj
@@ -1030,6 +1057,9 @@ help:
 	@echo "... Core/Src/fsm.obj"
 	@echo "... Core/Src/fsm.i"
 	@echo "... Core/Src/fsm.s"
+	@echo "... Core/Src/fsm_v2.obj"
+	@echo "... Core/Src/fsm_v2.i"
+	@echo "... Core/Src/fsm_v2.s"
 	@echo "... Core/Src/lcdhitachi.obj"
 	@echo "... Core/Src/lcdhitachi.i"
 	@echo "... Core/Src/lcdhitachi.s"

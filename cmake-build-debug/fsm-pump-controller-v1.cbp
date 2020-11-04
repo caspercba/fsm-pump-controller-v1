@@ -102,6 +102,9 @@
 		<Unit filename="/home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Inc/fsm.h">
 			<Option target="fsm-pump-controller-v1.elf"/>
 		</Unit>
+		<Unit filename="/home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Inc/fsm_v2.h">
+			<Option target="fsm-pump-controller-v1.elf"/>
+		</Unit>
 		<Unit filename="/home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Inc/lcdhitachi.h">
 			<Option target="fsm-pump-controller-v1.elf"/>
 		</Unit>
@@ -121,6 +124,9 @@
 			<Option target="fsm-pump-controller-v1.elf"/>
 		</Unit>
 		<Unit filename="/home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/fsm.c">
+			<Option target="fsm-pump-controller-v1.elf"/>
+		</Unit>
+		<Unit filename="/home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/fsm_v2.c">
 			<Option target="fsm-pump-controller-v1.elf"/>
 		</Unit>
 		<Unit filename="/home/gaspar/CLionProjects/fsm-pump-controller-v1/Core/Src/lcdhitachi.c">
