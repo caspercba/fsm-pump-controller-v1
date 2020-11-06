@@ -4,123 +4,165 @@
 
 
 #include <stdint-gcc.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "fsm.h"
 #include "bsp.h"
+#include "lcd_helper.h"
+#include "queue.h"
 
-static void no_action_handler(sm_context_t *context, void *data);
-static void on_calendar_start_when_idle(sm_context_t *context);
-static void on_calendar_stop_when_running(sm_context_t *context);
-static void on_maxlevel_reached_when_running(sm_context_t *context);
-static void on_startup_time_done_when_starting(sm_context_t *context);
+uint8_t currentState = ST_IDLE;
+
+void printDebug(const uint8_t *func_name, uint32_t data);
+
+static void no_action_handler(uint32_t data);
+static void on_batt_level_x_idle(uint32_t data);
+static void on_tank_level_x_idle(uint32_t data);
+static void on_pump_rate_x_idle(uint32_t data);
+static void on_button_push_x_idle(uint32_t data);
+static void on_ev_calendar_x_idle(uint32_t data);
+static void on_timertick_x_idle(uint32_t data);
+static void on_batt_level_x_startup_batt(uint32_t data);
+static void on_tank_level_x_startup_tank(uint32_t data);
+static void on_timertick_x_startup_wait(uint32_t data);
+static void on_timertick_x_running(uint32_t data);
+static void on_calendar_x_running(uint32_t data);
+
+static void on_batt_level_x_run_read(uint32_t data);
+static void on_tank_level_x_run_read(uint32_t data);
+static void on_timertick_x_read_rate(uint32_t data);
+
+
+static void (*handler[ST_TOTAL][EV_TOTAL])(uint32_t data) = {
+        // IDLE
+        {on_batt_level_x_idle, on_tank_level_x_idle, on_pump_rate_x_idle, on_button_push_x_idle, on_ev_calendar_x_idle, on_timertick_x_idle},
+        //
+        {no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler},
+
+        {no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler},
+
+        {no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler},
+
+        {no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler},
+
+        {no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler},
+
+        {no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler},
+
+        {no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler},
+        // ERROR
+        {no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler}
+
+};
+
+void fsm_init() {
+
+}
+
+void fsm_enqueue_event(str_event ev) {
+    add(ev);
+}
+void fsm_handle_events() {
+    str_event *next = getNext();
+
+    if(next != NULL) {
+        handler[currentState][next->id](next->data);
+    }
+}
+
+
 /*
-                  ST_IDLE,
-                  ST_STARTUP_READ_BATT,
-                  ST_START_READ_TANK,
-                  ST_START_WAIT_2MIN,
-                  ST_RUNNING,
-                  ST_RUN_READ_TANK,
-                  ST_RUN_READ_BATT,
-                  ST_RUN_READ_RATE,
-                  ST_ERROR);
+ ____ _____   ____  _____    _    ____    ____    _  _____ _____
+/ ___|_   _| |  _ \| ____|  / \  |  _ \  | __ )  / \|_   _|_   _|
+\___ \ | |   | |_) |  _|   / _ \ | | | | |  _ \ / _ \ | |   | |
+ ___) || |   |  _ <| |___ / ___ \| |_| | | |_) / ___ \| |   | |
+|____/ |_|   |_| \_\_____/_/   \_\____/  |____/_/   \_\_|   |_|
+*/
 
-                  EV_BATT_LEVEL,
-                  EV_TANK_LEVEL,
-                  EV_PUMP_RATE,
-                  EV_BUTTON_PUSH,
-                  EV_CALENDAR,
-                  EV_TIMER_TICK
+/*
+ ____ _____   ____  _____    _    ____    _____  _    _   _ _  __
+/ ___|_   _| |  _ \| ____|  / \  |  _ \  |_   _|/ \  | \ | | |/ /
+\___ \ | |   | |_) |  _|   / _ \ | | | |   | | / _ \ |  \| | ' /
+ ___) || |   |  _ <| |___ / ___ \| |_| |   | |/ ___ \| |\  | . \
+|____/ |_|   |_| \_\_____/_/   \_\____/    |_/_/   \_\_| \_|_|\_\
+
  */
 
 
-sm_declare_state_machine(
-        pumpfsm,
-        ST_IDLE,
-        (uint32_t) no_action_handler,   // EV_BATT_LEVEL
-        (uint32_t) no_action_handler,   // EV_TANK_LEVEL
-        (uint32_t) no_action_handler,   // EV_PUMP_RATE
-        (uint32_t) no_action_handler,   // EV_BUTTON_PUSH
-        (uint32_t) no_action_handler,   // EV_CALENDAR
-        (uint32_t) no_action_handler,   // EV_TIMER_TICK
-        ST_STARTUP_READ_BATT,
-        (uint32_t) no_action_handler,   // EV_BATT_LEVEL
-        (uint32_t) no_action_handler,   // EV_TANK_LEVEL
-        (uint32_t) no_action_handler,   // EV_PUMP_RATE
-        (uint32_t) no_action_handler,   // EV_BUTTON_PUSH
-        (uint32_t) no_action_handler,   // EV_CALENDAR
-        (uint32_t) no_action_handler,   // EV_TIMER_TICK
-        ST_START_READ_TANK,
-        (uint32_t) no_action_handler,   // EV_BATT_LEVEL
-        (uint32_t) no_action_handler,   // EV_TANK_LEVEL
-        (uint32_t) no_action_handler,   // EV_PUMP_RATE
-        (uint32_t) no_action_handler,   // EV_BUTTON_PUSH
-        (uint32_t) no_action_handler,   // EV_CALENDAR
-        (uint32_t) no_action_handler,   // EV_TIMER_TICK
-        ST_START_WAIT_2MIN,
-        (uint32_t) no_action_handler,   // EV_BATT_LEVEL
-        (uint32_t) no_action_handler,   // EV_TANK_LEVEL
-        (uint32_t) no_action_handler,   // EV_PUMP_RATE
-        (uint32_t) no_action_handler,   // EV_BUTTON_PUSH
-        (uint32_t) no_action_handler,   // EV_CALENDAR
-        (uint32_t) no_action_handler,   // EV_TIMER_TICK
-        ST_RUNNING,
-        (uint32_t) no_action_handler,   // EV_BATT_LEVEL
-        (uint32_t) no_action_handler,   // EV_TANK_LEVEL
-        (uint32_t) no_action_handler,   // EV_PUMP_RATE
-        (uint32_t) no_action_handler,   // EV_BUTTON_PUSH
-        (uint32_t) no_action_handler,   // EV_CALENDAR
-        (uint32_t) no_action_handler,   // EV_TIMER_TICK
-        ST_RUN_READ_TANK,
-        (uint32_t) no_action_handler,   // EV_BATT_LEVEL
-        (uint32_t) no_action_handler,   // EV_TANK_LEVEL
-        (uint32_t) no_action_handler,   // EV_PUMP_RATE
-        (uint32_t) no_action_handler,   // EV_BUTTON_PUSH
-        (uint32_t) no_action_handler,   // EV_CALENDAR
-        (uint32_t) no_action_handler,   // EV_TIMER_TICK
-        ST_RUN_READ_BATT,
-        (uint32_t) no_action_handler,   // EV_BATT_LEVEL
-        (uint32_t) no_action_handler,   // EV_TANK_LEVEL
-        (uint32_t) no_action_handler,   // EV_PUMP_RATE
-        (uint32_t) no_action_handler,   // EV_BUTTON_PUSH
-        (uint32_t) no_action_handler,   // EV_CALENDAR
-        (uint32_t) no_action_handler,   // EV_TIMER_TICK
-        ST_RUN_READ_RATE,
-        (uint32_t) no_action_handler,   // EV_BATT_LEVEL
-        (uint32_t) no_action_handler,   // EV_TANK_LEVEL
-        (uint32_t) no_action_handler,   // EV_PUMP_RATE
-        (uint32_t) no_action_handler,   // EV_BUTTON_PUSH
-        (uint32_t) no_action_handler,   // EV_CALENDAR
-        (uint32_t) no_action_handler,   // EV_TIMER_TICK
-        ST_ERROR
-);
+/*
+ ____ _____  __        ___    ___ _____   ____  __  __ ___ _   _
+/ ___|_   _| \ \      / / \  |_ _|_   _| |___ \|  \/  |_ _| \ | |
+\___ \ | |    \ \ /\ / / _ \  | |  | |     __) | |\/| || ||  \| |
+ ___) || |     \ V  V / ___ \ | |  | |    / __/| |  | || || |\  |
+|____/ |_|      \_/\_/_/   \_\___| |_|   |_____|_|  |_|___|_| \_|
 
-sm_define_handle_event(pumpfsm)
+ */
 
-static void no_action_handler(sm_context_t *context, void* data) {
-    debug2((char*)data);
+/*
+ ____  _   _ _   _ _   _ ___ _   _  ____
+|  _ \| | | | \ | | \ | |_ _| \ | |/ ___|
+| |_) | | | |  \| |  \| || ||  \| | |  _
+|  _ <| |_| | |\  | |\  || || |\  | |_| |
+|_| \_\\___/|_| \_|_| \_|___|_| \_|\____|
+
+ */
+static void no_action_handler(uint32_t data) {
+    debug2((uint8_t *)data);
 }
 
-static void on_calendar_start_when_idle(sm_context_t *context) {
-    debug2("IDLE1");
-    // start timer
-    //sm_set_state(context, STARTING);
+
+/*
+ ___ ____  _     _____
+|_ _|  _ \| |   | ____|
+ | || | | | |   |  _|
+ | || |_| | |___| |___
+|___|____/|_____|_____|
+*/
+
+static void on_batt_level_x_idle(uint32_t data) {
+    printDebug(__func__, data);
+}
+static void on_tank_level_x_idle(uint32_t data) {
+    printDebug(__func__, data);
+}
+static void on_pump_rate_x_idle(uint32_t data) {
+    printDebug(__func__, data);
+}
+static void on_button_push_x_idle(uint32_t data) {
+    printDebug(__func__, data);
+}
+static void on_ev_calendar_x_idle(uint32_t data) {
+    printDebug(__func__, data);
+}
+static void on_timertick_x_idle(uint32_t data) {
+    printDebug(__func__, data);
 }
 
-static void on_calendar_stop_when_running(sm_context_t *context) {
-    debug2("RUNNING");
-    //sm_set_state(context, IDLE);
+static void on_batt_level_x_startup_batt(uint32_t data) {
+    printDebug(__func__, data);
+}
+static void on_tank_level_x_startup_tank(uint32_t data) {
+    printDebug(__func__, data);
+}
+static void on_timertick_x_startup_wait(uint32_t data) {
+}
+static void on_timertick_x_running(uint32_t data) {
+}
+static void on_calendar_x_running( uint32_t data) {
+}
+static void on_batt_level_x_run_read(uint32_t data) {
+}
+static void on_tank_level_x_run_read(uint32_t data) {
+}
+static void on_timertick_x_read_rate(uint32_t data) {
 }
 
-static void on_maxlevel_reached_when_running(sm_context_t *context){
-    debug2("RUNNING");
-    //sm_set_state(context, IDLE);
-}
-
-static void on_startup_time_done_when_starting(sm_context_t *context){
-    //sm_set_state(context, RUNNING);
+void printDebug(const uint8_t *func_name, uint32_t data) {
+    printf("%s data: %lu\r\n", func_name, data);
 }
 
 void debug2(const uint8_t *str) {
-    if(DEBUG) {
+    if(DEBUG/* && str != NULL*/) {
         LCD_writeLine2(str);
     }
 }

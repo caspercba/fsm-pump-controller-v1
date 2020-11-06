@@ -7,6 +7,9 @@ void callback_button(uint8_t btn, uint8_t evt);
 void tick_callback(void);
 void tank_callback(uint32_t mVolts);
 
+
+uint32_t delay = 100;
+
 void main(void) {
 
     SYSTEM_init();
@@ -14,37 +17,60 @@ void main(void) {
     SYSTEM_set_tick_callback(tick_callback);
     SYSTEM_set_tank_millivolts_callback(tank_callback);
 
-    //sm_handle_event(pumpfsm, EV_BUTTON_PUSH, NULL);
-    sm_handle_event(pumpfsm, EV_BATT_LEVEL, "low");
-    uint32_t a = HAL_RCC_GetHCLKFreq();
-
-    //LCD_writeLine1(a);
 
     while (1) {
-
+        printf("ENQUEUE HANDLE\r\n");
+        fsm_handle_events();
+        HAL_Delay(delay);
+        delay += 10;
+        if(delay > 600) delay = 100;
     }
 }
 
 void callback_button(uint8_t btn, uint8_t evt) {
-    sm_handle_event(pumpfsm, EV_BUTTON_PUSH, &btn);
+    //sm_handle_event(pumpfsm, EV_BUTTON_PUSH, &btn);
 //    uint8_t str[12];
 //    sprintf(str, "BUTTON PRESS: %d", btn);
 //    LCD_writeLine1(str);
 }
 
+uint8_t count = 0;
+
 void tick_callback(void) {
-    sm_handle_event(pumpfsm, EV_TIMER_TICK, NULL);
+    if(count % 4) {
+        printf("ENQUEUE: EV_BUTTON_PUSH, data: data\r\n");
+        str_event ev = { EV_BUTTON_PUSH, 111};
+        fsm_enqueue_event(ev);
+    } else if(count % 3) {
+        printf("ENQUEUE: EV_TANK_LEVEL, data: data\r\n");
+        str_event ev = { EV_TANK_LEVEL, 222};
+        fsm_enqueue_event(ev);
+    } else if (count % 2) {
+        printf("ENQUEUE: EV_TIMER_TICK, data: data\r\n");
+        str_event ev = { EV_TIMER_TICK, 333};
+        fsm_enqueue_event(ev);
+    }
+    else {
+        printf("ENQUEUE: EV_CALENDAR, data: 123\r\n");
+        str_event ev = { EV_CALENDAR, 444};
+        fsm_enqueue_event(ev);
+    }
 //    struct tm time = SYSTEM_getTimeDate();
 //    uint8_t str[12];
 //    sprintf(str, "%02d:%02d:%02d", time.tm_hour, time.tm_min, time.tm_sec);
 //    LCD_writeLine1(str);
 //    sprintf(str, "%02d:%02d:%04d", time.tm_mday, time.tm_mon, time.tm_year);
 //    LCD_writeLine2(str);
+count++;
 }
 
 void tank_callback(uint32_t mVolts) {
-    sm_handle_event(pumpfsm, EV_TANK_LEVEL, &mVolts);
+    //sm_handle_event(pumpfsm, EV_TANK_LEVEL, &mVolts);
 }
+
+
+/* USER CODE END PFP */
+
 
 
 #ifdef  USE_FULL_ASSERT

@@ -8,6 +8,7 @@
 typedef struct sm_context sm_context_t;
 typedef void (*sm_handler_t) (sm_context_t *, void *data);
 
+
 #define sm_declare_states(name, ...) \
 typedef enum {                       \
     __VA_ARGS__,                     \
@@ -18,7 +19,9 @@ typedef enum {                       \
 typedef enum {                       \
     __VA_ARGS__,                     \
     name##_EVENT_COUNT               \
-    } name##_event_e
+    } name##_event_e ;                \
+static name##_event_e queuedEvent;                  \
+static void* queuedData;
 
 #define sm_declare_state_machine(name, st_init, ...) \
 struct sm_context {                                  \
@@ -32,7 +35,8 @@ static const unsigned int                        \
   {__VA_ARGS__};                                   \
 static sm_context_t name##_context =             \
   {0, st_init, (name##_event_e) 0,                 \
-  (sm_handler_t *)name##_handler}
+  (sm_handler_t *)name##_handler};                   \
+
 
 #define sm_set_state(c, s) (c)->state = (s)
 #define sm_set_private_data(c, p) (c)->priv = (p)
@@ -47,10 +51,13 @@ void name##_handle_event(name##_event_e ev, void* data) \
   }
 
 #define sm_declare_handle_event(name) \
-void name##_handle_event(name##_event_e ev, void *data)
+void name##_handle_event(name##_event_e ev, void *data);
 
-#define sm_handle_event(name, ev, data) name##_handle_event(ev, data)
-
-
+#define sm_handle_event(name, ev, data) name##_handle_event(ev, data);
+#define sm_enqueue_event(name, ev, data) { queuedEvent = ev; queuedData = data;}
+#define sm_handle_equeued_events(name) { \
+    printf("HANDLING: %d", queuedEvent) ;                                    \
+    if(queuedEvent < 255) sm_handle_event(name, queuedEvent, queuedData) ; \
+    queuedEvent = 255; }
 
 #endif //FSM_PUMP_CONTROLLER_V1_SM_FRAMEWORK_H

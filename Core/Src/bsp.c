@@ -11,6 +11,14 @@
 #include "lcdhitachi.h"
 #include "main.h"
 
+#ifdef __GNUC__
+/* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
+ set to 'Yes') calls __io_putchar() */
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+#else
+#define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
+#endif /* __GNUC__ */
+
 
 static void SystemClock_Config(void);
 static void MX_RTC_Init(void);
@@ -35,13 +43,18 @@ RTC_TimeTypeDef currentTime;
 RTC_DateTypeDef currentDate;
 
 
-#define TICK_REFRESH_RATE_PER_SEC 4
+#define TICK_REFRESH_RATE_PER_SEC 2
 
 
 typedef struct {
     uint16_t pin;
     void *gpioTypeDef;
 } str_gpio;
+
+typedef struct {
+    uint32_t data;
+    uint32_t time;
+} str_measurement;
 
 typedef struct {
     str_gpio buttons[BTN_TYPE_TOTAL];
@@ -53,6 +66,8 @@ typedef struct {
     void (*callback_button) (uint8_t btn, uint8_t evt);
     void (*callback_tank_volts) (void (*func) (uint32_t mVolts));
     void (*callback_tick) (void);
+    str_measurement lastTankValue;
+    str_measurement lastBattValue;
 } str_system;
 
 str_system system = {
@@ -104,7 +119,7 @@ void SYSTEM_set_tank_millivolts_callback(void (*func) (uint32_t mVolts)) {
 }
 
 uint32_t SYSTEM_getEpoch() {
-
+    return 0;
 }
 
 void SYSTEM_set_led_auto_on() {
@@ -129,21 +144,9 @@ struct tm SYSTEM_getTimeDate() {
     return result;
 }
 
-static time_t getTimeEpoch(struct tm *currentTime) {
-    return mktime(currentTime);
-}
-
-static void getTimeDate(RTC_TimeTypeDef* currentTimeIn, RTC_DateTypeDef* currentDateIn, struct tm *currTimeOut) {
-    uint8_t result1 = HAL_RTC_GetTime(&hrtc, currentTimeIn, RTC_FORMAT_BIN);
-    uint8_t result2 = HAL_RTC_GetDate(&hrtc, currentDateIn, RTC_FORMAT_BIN);
-    if ((result1 && result2) == HAL_OK) {
-    currTimeOut->tm_year = currentDateIn->Year + 100;  // In fact: 2000 + 18 - 1900
-    currTimeOut->tm_mday = currentDateIn->Date;
-    currTimeOut->tm_mon = currentDateIn->Month - 1;
-    currTimeOut->tm_hour = currentTimeIn->Hours;
-    currTimeOut->tm_min = currentTimeIn->Minutes;
-    currTimeOut->tm_sec = currentTimeIn->Seconds;
-    }
+static time_t getTimeEpoch() {
+    struct tm temp = SYSTEM_getTimeDate();
+    return mktime(&temp);
 }
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
@@ -158,6 +161,8 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc1_ref) {
     if(system.callback_tank_volts != NULL) {
         uint32_t value = HAL_ADC_GetValue(hadc1_ref);
         system.callback_tank_volts((uint16_t) value);
+        system.lastTankValue.data = value;
+        system.lastTankValue.time = getTimeEpoch();
     }
 }
 
@@ -348,6 +353,7 @@ static void MX_USART2_UART_Init(void) {
     }
 }
 
+
 static void MX_TIM4_Init(void) {
     __TIM3_CLK_ENABLE();
     tim4.Init.Prescaler = 12500;
@@ -372,5 +378,33 @@ void TIM3_IRQHandler(void) {
     }
 }
 
+
+
+/* USER CODE BEGIN 0 */
+
+
+
+PUTCHAR_PROTOTYPE
+{
+    HAL_UART_Transmit(&huart2, (uint8_t *)&ch, 1, 0xFFFF);
+    return ch;
+}
+
+//int _write (int fd, char *ptr, int len)
+//{
+//    HAL_UART_Transmit(&huart2, (uint8_t*) ptr, len, 0xFFFF);
+//
+//    return len;
+//}
+//
+//int _read (int fd, char *ptr, int len)
+//{
+//
+//    *ptr = 0x00; // Flush the character buffer
+//
+//    HAL_UART_Receive(&huart2, (uint8_t*) ptr, 1, 0xFFFF);
+//
+//    return 1;
+//}
 
 
