@@ -2,8 +2,6 @@
 // Created by gaspar on 22/10/20.
 //
 
-
-#include <memory.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "stm32f4xx_hal.h"
@@ -12,6 +10,9 @@
 #include "lcdhitachi.h"
 #include "main.h"
 
+
+// DEBUG STUFF
+
 #ifdef __GNUC__
 /* With GCC/RAISONANCE, small printf (option LD Linker->Libraries->Small printf
  set to 'Yes') calls __io_putchar() */
@@ -19,6 +20,8 @@
 #else
 #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
 #endif /* __GNUC__ */
+
+
 
 
 static void SystemClock_Config(void);
@@ -109,6 +112,10 @@ void SYSTEM_init(void) {
     //MX_SPI1_Init();
     //MX_USART2_UART_Init();
     LCD_init(&hi2c1);
+}
+
+void SYSTEM_delay(uint32_t delay) {
+    HAL_Delay(delay);
 }
 
 void SYSTEM_set_button_callback(void (*func) (uint8_t button)) {
@@ -432,9 +439,6 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc1_ref) {
     channel++;
 }
 
-
-
-/* USER CODE BEGIN 0 */
 
 
 

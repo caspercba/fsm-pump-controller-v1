@@ -29,6 +29,7 @@ int main(void) {
 
     while (1) {
         fsm_handle_events();
+        SYSTEM_delay(10);
     }
 }
 

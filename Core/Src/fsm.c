@@ -21,10 +21,11 @@ void printDebug(const uint8_t *func_name, str_event * ev);
 uint8_t should_start();
 
 static void no_action_handler(str_event *ev);
-
 static void on_batt_level(str_event *ev);
 static void on_tank_level(str_event *ev);
 static void on_pump_rate(str_event *ev);
+
+
 static void on_button_push_x_idle(str_event *ev);
 static void on_timertick_x_idle(str_event *ev);
 
