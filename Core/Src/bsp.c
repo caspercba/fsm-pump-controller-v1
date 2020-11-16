@@ -5,6 +5,7 @@
 
 #include <memory.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "stm32f4xx_hal.h"
 #include "stm32f407xx.h"
 #include "bsp.h"
@@ -41,20 +42,13 @@ TIM_HandleTypeDef tim4;
 
 RTC_TimeTypeDef currentTime;
 RTC_DateTypeDef currentDate;
-
-
-#define TICK_REFRESH_RATE_PER_SEC 2
+struct tm tm_last_result;
 
 
 typedef struct {
     uint16_t pin;
-    void *gpioTypeDef;
+    GPIO_TypeDef *gpioTypeDef;
 } str_gpio;
-
-typedef struct {
-    uint32_t data;
-    uint32_t time;
-} str_measurement;
 
 typedef struct {
     str_gpio buttons[BTN_TYPE_TOTAL];
@@ -63,34 +57,45 @@ typedef struct {
     str_gpio led_activity;
     str_gpio led_pump_run;
     str_gpio led_auto_on;
-    void (*callback_button) (uint8_t btn, uint8_t evt);
-    void (*callback_tank_volts) (void (*func) (uint32_t mVolts));
+    void (*callback_button) (uint8_t btn);
+    void (*callback_tank_liters) (uint32_t);
+    void (*callback_batt_volts) (uint32_t);
     void (*callback_tick) (void);
-    str_measurement lastTankValue;
-    str_measurement lastBattValue;
-} str_system;
+    uint32_t tank_liters_per_step;
+    uint32_t tank_step_offset;
+    uint32_t millivolt_per_step_batt;
+    uint8_t tick_refresh_times_per_sec;
+    uint8_t tank_refresh_every_secs;
+} str_hw_config;
 
-str_system system = {
-        {{GPIO_PIN_0, GPIOA},   // BTN_TYPE_START
-         {GPIO_PIN_3, GPIOA},   // BTN_TYPE_STOP
-         {GPIO_PIN_3, GPIOA}},  // BTN_TYPE_AUTO
-        {GPIO_PIN_2, GPIOA},
-        {GPIO_PIN_2, GPIOA},
-        {GPIO_PIN_2, GPIOA},
-        {GPIO_PIN_2, GPIOA},
-        {GPIO_PIN_2, GPIOA},
+str_hw_config hw_config = {
+        {{GPIO_PIN_0, GPIOE},   // BTN_TYPE_START
+         {GPIO_PIN_1, GPIOE},   // BTN_TYPE_STOP
+         {GPIO_PIN_2, GPIOE}},  // BTN_TYPE_AUTO
+        {GPIO_PIN_3, GPIOE},
+        {GPIO_PIN_4, GPIOE},
+        {GPIO_PIN_5, GPIOE},
+        {GPIO_PIN_6, GPIOE},
+        {GPIO_PIN_0, GPIOD},
         NULL,
         NULL,
-        NULL
+        NULL,
+        NULL,
+        2,
+        0,
+        41,
+        5,
+        1
 };
 
-void LCD_writeLine1(const uint8_t * str) {
-    LCD_1stLine();
-    LCD_printf(str);
+static uint8_t isPinOn(str_gpio* gpio) {
+    if(HAL_GPIO_ReadPin(gpio->gpioTypeDef, gpio->pin) == GPIO_PIN_SET) return 1;
+    else return 0;
 }
-void LCD_writeLine2(const uint8_t* str) {
-    LCD_2ndLine();
-    LCD_printf(str);
+
+static void setPin(str_gpio *gpio, uint8_t value) {
+    if(value != 0) HAL_GPIO_WritePin(gpio->gpioTypeDef, gpio->pin, GPIO_PIN_SET);
+    else HAL_GPIO_WritePin(gpio->gpioTypeDef, gpio->pin, GPIO_PIN_RESET);
 }
 
 void SYSTEM_init(void) {
@@ -101,70 +106,68 @@ void SYSTEM_init(void) {
     MX_I2C1_Init();
     MX_ADC1_Init();
     MX_RTC_Init();
-    MX_SPI1_Init();
-    MX_USART2_UART_Init();
+    //MX_SPI1_Init();
+    //MX_USART2_UART_Init();
     LCD_init(&hi2c1);
 }
 
-void SYSTEM_set_button_callback(void (*func) (uint8_t button, uint8_t evt)) {
-    system.callback_button = func;
+void SYSTEM_set_button_callback(void (*func) (uint8_t button)) {
+    hw_config.callback_button = func;
 }
 
 void SYSTEM_set_tick_callback(void (*func) (void)) {
-    system.callback_tick = func;
+    hw_config.callback_tick = func;
 }
 
-void SYSTEM_set_tank_millivolts_callback(void (*func) (uint32_t mVolts)) {
-    system.callback_tank_volts = func;
+void SYSTEM_set_tank_liters_callback(void (*func) (uint32_t mVolts)) {
+    hw_config.callback_tank_liters = func;
+}
+
+void SYSTEM_set_batt_millivolts_callback(void (*func) (uint32_t mVolts)) {
+    hw_config.callback_batt_volts = func;
+}
+
+static time_t getTimeEpoch() {
+    struct tm *temp = SYSTEM_getTimeDate();
+    return mktime(temp);
 }
 
 uint32_t SYSTEM_getEpoch() {
-    return 0;
+    return getTimeEpoch();
 }
 
-void SYSTEM_set_led_auto_on() {
-
-}
-void SYSTEM_set_led_auto_off() {
-
+void SYSTEM_led_auto_set(uint8_t value) {
+    setPin(&hw_config.led_auto_on, value);
 }
 
-struct tm SYSTEM_getTimeDate() {
-    struct tm result;
+uint8_t SYSTEM_led_auto_is_on() {
+    return isPinOn(&hw_config.led_auto_on);
+}
+
+uint8_t SYSTEM_pump_is_on() {
+    return isPinOn(&hw_config.pump.pin);
+}
+
+void SYSTEM_pump_set(uint8_t val) {
+    setPin(&hw_config.pump, val);
+}
+
+struct tm *SYSTEM_getTimeDate() {
+
 
     HAL_RTC_GetTime(&hrtc, &currentTime, RTC_FORMAT_BIN);
     HAL_RTC_GetDate(&hrtc, &currentDate, RTC_FORMAT_BIN);
 
-    result.tm_sec = currentTime.Seconds;
-    result.tm_min = currentTime.Minutes;
-    result.tm_hour = currentTime.Hours;
-    result.tm_mday = currentDate.Date;
-    result.tm_mon = currentDate.Month;
-    result.tm_year = currentDate.Year + 2000;
-    return result;
+    tm_last_result.tm_sec = currentTime.Seconds;
+    tm_last_result.tm_min = currentTime.Minutes;
+    tm_last_result.tm_hour = currentTime.Hours;
+    tm_last_result.tm_mday = currentDate.Date;
+    tm_last_result.tm_mon = currentDate.Month;
+    tm_last_result.tm_year = currentDate.Year + 2000;
+    return &tm_last_result;
 }
 
-static time_t getTimeEpoch() {
-    struct tm temp = SYSTEM_getTimeDate();
-    return mktime(&temp);
-}
 
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
-    for(int i = 0 ; i < BTN_TYPE_TOTAL ; i++) {
-        if(system.buttons->pin == GPIO_Pin && system.callback_button != NULL) {
-            system.callback_button(i, EVT_BTN_PUSH);
-        }
-    }
-}
-
-void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc1_ref) {
-    if(system.callback_tank_volts != NULL) {
-        uint32_t value = HAL_ADC_GetValue(hadc1_ref);
-        system.callback_tank_volts((uint16_t) value);
-        system.lastTankValue.data = value;
-        system.lastTankValue.time = getTimeEpoch();
-    }
-}
 
 /**
  *  Configuration stuff
@@ -252,22 +255,12 @@ static void MX_I2C1_Init(void)
 
 static void MX_ADC1_Init(void)
 {
-
-    /* USER CODE BEGIN ADC1_Init 0 */
-
-    /* USER CODE END ADC1_Init 0 */
-
     ADC_ChannelConfTypeDef sConfig = {0};
 
-    /* USER CODE BEGIN ADC1_Init 1 */
-
-    /* USER CODE END ADC1_Init 1 */
-    /** Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
-    */
     hadc1.Instance = ADC1;
     hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV8;
     hadc1.Init.Resolution = ADC_RESOLUTION_12B;
-    hadc1.Init.ScanConvMode = DISABLE;
+    hadc1.Init.ScanConvMode = ENABLE;
     hadc1.Init.ContinuousConvMode = ENABLE;
     hadc1.Init.DiscontinuousConvMode = DISABLE;
     hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
@@ -275,7 +268,7 @@ static void MX_ADC1_Init(void)
     hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
     hadc1.Init.NbrOfConversion = 1;
     hadc1.Init.DMAContinuousRequests = DISABLE;
-    hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
+    hadc1.Init.EOCSelection = EOC_SINGLE_CONV;
     if (HAL_ADC_Init(&hadc1) != HAL_OK)
     {
         Error_Handler();
@@ -285,15 +278,14 @@ static void MX_ADC1_Init(void)
     sConfig.Channel = ADC_CHANNEL_1;
     sConfig.Rank = 1;
     sConfig.SamplingTime = ADC_SAMPLETIME_480CYCLES;
+
     if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
     {
         Error_Handler();
     }
-    /* USER CODE BEGIN ADC1_Init 2 */
-
-    /* USER CODE END ADC1_Init 2 */
 
 }
+
 
 /**
   * @brief GPIO Initialization Function
@@ -303,18 +295,47 @@ static void MX_ADC1_Init(void)
 static void MX_GPIO_Init(void)
 {
 
-    __HAL_RCC_GPIOA_CLK_ENABLE();
+    __HAL_RCC_GPIOD_CLK_ENABLE();
+    __HAL_RCC_GPIOE_CLK_ENABLE();
 
     GPIO_InitTypeDef GPIO_InitStruct = {0};
 
-    GPIO_InitStruct.Pin = system.buttons[BTN_TYPE_START].pin;
+    GPIO_InitStruct.Pin = hw_config.buttons[BTN_TYPE_START].pin;
     GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
     GPIO_InitStruct.Pull = GPIO_PULLDOWN;
     GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
-    HAL_GPIO_Init(system.buttons[BTN_TYPE_START].gpioTypeDef, &GPIO_InitStruct);
+    HAL_GPIO_Init(hw_config.buttons[BTN_TYPE_START].gpioTypeDef, &GPIO_InitStruct);
 
-    HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0); // <--- This and
-    HAL_NVIC_EnableIRQ(EXTI0_IRQn); // <--- this are what were missing for you.
+    GPIO_InitStruct.Pin = hw_config.buttons[BTN_TYPE_STOP].pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+    GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
+    HAL_GPIO_Init(hw_config.buttons[BTN_TYPE_STOP].gpioTypeDef, &GPIO_InitStruct);
+
+    GPIO_InitStruct.Pin = hw_config.buttons[BTN_TYPE_AUTO].pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+    GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
+    HAL_GPIO_Init(hw_config.buttons[BTN_TYPE_AUTO].gpioTypeDef, &GPIO_InitStruct);
+
+    GPIO_InitStruct.Pin = hw_config.pump.pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+    GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
+    HAL_GPIO_Init(hw_config.pump.gpioTypeDef, &GPIO_InitStruct);
+
+    GPIO_InitStruct.Pin = hw_config.led_pump_run.pin;
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+    GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
+    HAL_GPIO_Init(hw_config.led_pump_run.gpioTypeDef, &GPIO_InitStruct);
+
+    HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+
+    HAL_NVIC_SetPriority(EXTI3_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(EXTI3_IRQn);
+
 }
 
 
@@ -358,7 +379,7 @@ static void MX_TIM4_Init(void) {
     __TIM3_CLK_ENABLE();
     tim4.Init.Prescaler = 12500;
     tim4.Init.CounterMode = TIM_COUNTERMODE_UP;
-    tim4.Init.Period = 1000 / TICK_REFRESH_RATE_PER_SEC;
+    tim4.Init.Period = 1000 / hw_config.tick_refresh_times_per_sec;
     tim4.Instance = TIM3;   //Same timer whose clocks we enabled
     HAL_TIM_Base_Init(&tim4);     // Init timer
     HAL_TIM_Base_Start_IT(&tim4); // start timer interrupts
@@ -366,16 +387,49 @@ static void MX_TIM4_Init(void) {
     HAL_NVIC_EnableIRQ(TIM3_IRQn);
 }
 
+static uint8_t timer_count = 0;
+
 void TIM3_IRQHandler(void) {
     //In case other interrupts are also running
     if (__HAL_TIM_GET_FLAG(&tim4, TIM_FLAG_UPDATE) != RESET) {
         if (__HAL_TIM_GET_ITSTATUS(&tim4, TIM_IT_UPDATE) != RESET) {
             __HAL_TIM_CLEAR_FLAG(&tim4, TIM_FLAG_UPDATE);
-            if (system.callback_tick != NULL) {
-                system.callback_tick();
+            if (hw_config.callback_tick != NULL) {
+                hw_config.callback_tick();
+                timer_count++;
+                if(timer_count > hw_config.tank_refresh_every_secs) {
+                    timer_count = 0;
+                    HAL_ADC_Start_IT(&hadc1);
+                }
             }
         }
     }
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+    for(int i = 0 ; i < BTN_TYPE_TOTAL ; i++) {
+        if(hw_config.buttons->pin == GPIO_Pin && hw_config.callback_button != NULL) {
+            hw_config.callback_button(i);
+        }
+    }
+}
+
+uint8_t channel = 0;
+
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc1_ref) {
+    uint32_t value = HAL_ADC_GetValue(hadc1_ref);
+    channel = 0;
+    if(channel == 0) {
+        if(hw_config.callback_tank_liters != NULL) {
+            uint32_t tank_liters = (value - hw_config.tank_step_offset) * hw_config.tank_liters_per_step;
+            hw_config.callback_tank_liters(tank_liters);
+        }
+    } else if(channel == 1) {
+        if(hw_config.callback_batt_volts != NULL) {
+            hw_config.callback_batt_volts(value * hw_config.millivolt_per_step_batt);
+        }
+    }
+    channel++;
 }
 
 

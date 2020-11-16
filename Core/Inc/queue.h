@@ -8,7 +8,14 @@
 
 #include "fsm.h"
 
-void add(str_event event);
-str_event *getNext();
+void queue_add(str_event event);
+str_event *queue_getNext();
+
+#ifndef max
+#define max(a,b)            (((a) > (b)) ? (a) : (b))
+#endif
+#ifndef min
+#define min(a,b)            (((a) < (b)) ? (a) : (b))
+#endif
 
 #endif //FSM_PUMP_CONTROLLER_V1_QUEUE_H

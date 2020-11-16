@@ -1,93 +1,71 @@
-#include <stdio.h>
 #include "bsp.h"
 #include "fsm.h"
-#include "stm32f4xx_hal.h"
 
-void callback_button(uint8_t btn, uint8_t evt);
+void callback_button(uint8_t btn);
 void tick_callback(void);
-void tank_callback(uint32_t mVolts);
+void tank_callback(uint32_t liters);
+void batt_callback(uint32_t mVolts);
 
+str_fsm_configuration my_config = {
+        8000,
+        5000,
+        25,
+        48000,
+        10,
+        00,
+        16,
+        00
+};
 
-uint32_t delay = 100;
-
-void main(void) {
+int main(void) {
 
     SYSTEM_init();
     SYSTEM_set_button_callback(callback_button);
     SYSTEM_set_tick_callback(tick_callback);
-    SYSTEM_set_tank_millivolts_callback(tank_callback);
+    SYSTEM_set_tank_liters_callback(tank_callback);
+    SYSTEM_set_batt_millivolts_callback(batt_callback);
 
+    fsm_set_config(&my_config);
 
     while (1) {
-        printf("ENQUEUE HANDLE\r\n");
         fsm_handle_events();
-        HAL_Delay(delay);
-        delay += 10;
-        if(delay > 600) delay = 100;
     }
 }
 
-void callback_button(uint8_t btn, uint8_t evt) {
-    //sm_handle_event(pumpfsm, EV_BUTTON_PUSH, &btn);
-//    uint8_t str[12];
-//    sprintf(str, "BUTTON PRESS: %d", btn);
-//    LCD_writeLine1(str);
+void callback_button(uint8_t btn) {
+    str_event ev = { EV_BUTTON_PUSH, btn, SYSTEM_getEpoch()};
+    fsm_enqueue_event(ev);
 }
-
-uint8_t count = 0;
 
 void tick_callback(void) {
-    if(count % 4) {
-        printf("ENQUEUE: EV_BUTTON_PUSH, data: data\r\n");
-        str_event ev = { EV_BUTTON_PUSH, 111};
-        fsm_enqueue_event(ev);
-    } else if(count % 3) {
-        printf("ENQUEUE: EV_TANK_LEVEL, data: data\r\n");
-        str_event ev = { EV_TANK_LEVEL, 222};
-        fsm_enqueue_event(ev);
-    } else if (count % 2) {
-        printf("ENQUEUE: EV_TIMER_TICK, data: data\r\n");
-        str_event ev = { EV_TIMER_TICK, 333};
+    uint32_t epoch = SYSTEM_getEpoch();
+    str_event ev = { EV_TIMER_TICK, SYSTEM_getTimeDate() , epoch};
+    fsm_enqueue_event(ev);
+}
+
+// cached values
+uint32_t last_tank_level = 10000;
+uint32_t last_tank_level_time = 0;
+uint8_t tank_counter = 0;
+
+void tank_callback(uint32_t liters) {
+    str_event ev = { EV_TANK_LEVEL, liters, SYSTEM_getEpoch()};
+    fsm_enqueue_event(ev);
+    tank_counter++;
+
+    // Send pump rate event, estimating values
+    if(tank_counter >= 10) {
+        tank_counter=0;
+        uint32_t now = SYSTEM_getEpoch();
+        uint32_t pumprate = ((liters - last_tank_level) * 60) / (SYSTEM_getEpoch() - last_tank_level_time);
+        last_tank_level_time = now;
+        last_tank_level = liters;
+        ev.id = EV_PUMP_RATE; ev.data = pumprate; ev.epoch = SYSTEM_getEpoch();
         fsm_enqueue_event(ev);
     }
-    else {
-        printf("ENQUEUE: EV_CALENDAR, data: 123\r\n");
-        str_event ev = { EV_CALENDAR, 444};
-        fsm_enqueue_event(ev);
-    }
-//    struct tm time = SYSTEM_getTimeDate();
-//    uint8_t str[12];
-//    sprintf(str, "%02d:%02d:%02d", time.tm_hour, time.tm_min, time.tm_sec);
-//    LCD_writeLine1(str);
-//    sprintf(str, "%02d:%02d:%04d", time.tm_mday, time.tm_mon, time.tm_year);
-//    LCD_writeLine2(str);
-count++;
 }
 
-void tank_callback(uint32_t mVolts) {
-    //sm_handle_event(pumpfsm, EV_TANK_LEVEL, &mVolts);
+void batt_callback(uint32_t mVolts) {
+    str_event ev = { EV_BATT_LEVEL, mVolts, SYSTEM_getEpoch()};
+    fsm_enqueue_event(ev);
 }
-
-
-/* USER CODE END PFP */
-
-
-
-#ifdef  USE_FULL_ASSERT
-/**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
-void assert_failed(uint8_t *file, uint32_t line)
-{
-  /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
-     tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-  /* USER CODE END 6 */
-}
-#endif /* USE_FULL_ASSERT */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

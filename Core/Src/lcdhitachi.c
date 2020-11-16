@@ -209,7 +209,7 @@ void LCD_shiftLeft(uint8_t offset)
 
 void LCD_printf(const uint8_t* str, ...)
 {
-    /*
+
     char stringArray[20];
     va_list args;
     va_start(args, str);
@@ -219,6 +219,6 @@ void LCD_printf(const uint8_t* str, ...)
     {
         LCD_sendData((uint8_t)stringArray[i]);
     }
-     */
+
 }
 

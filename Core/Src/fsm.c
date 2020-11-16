@@ -2,8 +2,6 @@
 // Created by gaspar on 25/10/20.
 //
 
-
-#include <stdint-gcc.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "fsm.h"
@@ -12,81 +10,107 @@
 #include "queue.h"
 
 uint8_t currentState = ST_IDLE;
+str_fsm_configuration *config = NULL;
 
-void printDebug(const uint8_t *func_name, uint32_t data);
-
-static void no_action_handler(uint32_t data);
-static void on_batt_level_x_idle(uint32_t data);
-static void on_tank_level_x_idle(uint32_t data);
-static void on_pump_rate_x_idle(uint32_t data);
-static void on_button_push_x_idle(uint32_t data);
-static void on_ev_calendar_x_idle(uint32_t data);
-static void on_timertick_x_idle(uint32_t data);
-static void on_batt_level_x_startup_batt(uint32_t data);
-static void on_tank_level_x_startup_tank(uint32_t data);
-static void on_timertick_x_startup_wait(uint32_t data);
-static void on_timertick_x_running(uint32_t data);
-static void on_calendar_x_running(uint32_t data);
-
-static void on_batt_level_x_run_read(uint32_t data);
-static void on_tank_level_x_run_read(uint32_t data);
-static void on_timertick_x_read_rate(uint32_t data);
+str_event last_events[EV_TOTAL];
+uint32_t current_rate = 0;
 
 
-static void (*handler[ST_TOTAL][EV_TOTAL])(uint32_t data) = {
+
+void printDebug(const uint8_t *func_name, str_event * ev);
+uint8_t should_start();
+
+static void no_action_handler(str_event *ev);
+
+static void on_batt_level(str_event *ev);
+static void on_tank_level(str_event *ev);
+static void on_pump_rate(str_event *ev);
+static void on_button_push_x_idle(str_event *ev);
+static void on_timertick_x_idle(str_event *ev);
+
+static void on_button_push_x_startup(str_event *ev);
+static void on_timertick_x_startup(str_event *ev);
+
+static void on_button_push_x_running(str_event *ev);
+static void on_timertick_x_running(str_event *ev);
+
+static void on_button_push_x_error(str_event *ev);
+static void on_timertick_x_error(str_event *ev);
+
+
+
+static void (*handler[ST_TOTAL][EV_TOTAL])(str_event *ev) = {
         // IDLE
-        {on_batt_level_x_idle, on_tank_level_x_idle, on_pump_rate_x_idle, on_button_push_x_idle, on_ev_calendar_x_idle, on_timertick_x_idle},
-        //
-        {no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler},
-
-        {no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler},
-
-        {no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler},
-
-        {no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler},
-
-        {no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler},
-
-        {no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler},
-
-        {no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler},
-        // ERROR
-        {no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler, no_action_handler}
-
+        {on_batt_level, on_tank_level, on_pump_rate, on_button_push_x_idle, on_timertick_x_idle},
+        // ST_START_WAIT_2MIN
+        {on_batt_level, on_tank_level, on_pump_rate, on_button_push_x_startup, on_timertick_x_startup},
+        // ST_RUNNING
+        {on_batt_level, on_tank_level, on_pump_rate, on_button_push_x_running, on_timertick_x_running},
+        // ST_ERROR
+        {on_batt_level, on_tank_level, on_pump_rate, on_button_push_x_error, on_timertick_x_error}
 };
 
-void fsm_init() {
-
+void fsm_set_config(str_fsm_configuration *cfg) {
+    config = cfg;
 }
 
 void fsm_enqueue_event(str_event ev) {
-    add(ev);
+    if(ev.id == EV_TANK_LEVEL && last_events[ev.id].data > 0) {
+        current_rate = (ev.data - last_events[ev.id].data) * 60 / (ev.epoch - last_events[ev.id].epoch);
+    }
+    last_events[ev.id] = ev;
+    queue_add(ev);
 }
 void fsm_handle_events() {
-    str_event *next = getNext();
+    str_event *next = queue_getNext();
 
     if(next != NULL) {
-        handler[currentState][next->id](next->data);
+        handler[currentState][next->id](next);
     }
 }
 
 
+static void no_action_handler(str_event *ev) {}
+
+
+
+
 /*
- ____ _____   ____  _____    _    ____    ____    _  _____ _____
-/ ___|_   _| |  _ \| ____|  / \  |  _ \  | __ )  / \|_   _|_   _|
-\___ \ | |   | |_) |  _|   / _ \ | | | | |  _ \ / _ \ | |   | |
- ___) || |   |  _ <| |___ / ___ \| |_| | | |_) / ___ \| |   | |
-|____/ |_|   |_| \_\_____/_/   \_\____/  |____/_/   \_\_|   |_|
+ ___ ____  _     _____
+|_ _|  _ \| |   | ____|
+ | || | | | |   |  _|
+ | || |_| | |___| |___
+|___|____/|_____|_____|
 */
 
-/*
- ____ _____   ____  _____    _    ____    _____  _    _   _ _  __
-/ ___|_   _| |  _ \| ____|  / \  |  _ \  |_   _|/ \  | \ | | |/ /
-\___ \ | |   | |_) |  _|   / _ \ | | | |   | | / _ \ |  \| | ' /
- ___) || |   |  _ <| |___ / ___ \| |_| |   | |/ ___ \| |\  | . \
-|____/ |_|   |_| \_\_____/_/   \_\____/    |_/_/   \_\_| \_|_|\_\
+static void on_batt_level(str_event *ev) {
+    last_events[EV_BATT_LEVEL] = *ev;
+}
+static void on_tank_level(str_event *ev) {
+    last_events[EV_TANK_LEVEL] = *ev;
+}
+static void on_pump_rate(str_event *ev) {
+    last_events[EV_PUMP_RATE] = *ev;
+}
+static void on_button_push_x_idle(str_event *ev) {
 
- */
+}
+static void on_timertick_x_idle(str_event *ev) {
+
+    if(should_start()) {
+        SYSTEM_pump_set(TRUE);
+        currentState = ST_START_WAIT_2MIN;
+    }
+
+    uint32_t batt = last_events[EV_BATT_LEVEL].data;
+    uint32_t tank = last_events[EV_TANK_LEVEL].data;
+    uint32_t tank_percent = min((tank * 100) / config->tank_capacity_liters, 100);
+
+    show_idle(ev->data,
+              tank,
+              batt,
+              tank_percent);
+}
 
 
 /*
@@ -98,6 +122,15 @@ void fsm_handle_events() {
 
  */
 
+static void on_button_push_x_startup(str_event *ev) {
+
+}
+static void on_timertick_x_startup(str_event *ev) {
+
+}
+
+
+
 /*
  ____  _   _ _   _ _   _ ___ _   _  ____
 |  _ \| | | | \ | | \ | |_ _| \ | |/ ___|
@@ -106,71 +139,52 @@ void fsm_handle_events() {
 |_| \_\\___/|_| \_|_| \_|___|_| \_|\____|
 
  */
-static void no_action_handler(uint32_t data) {
-    debug2((uint8_t *)data);
+
+static void on_button_push_x_running(str_event *ev) {
+
 }
+static void on_timertick_x_running(str_event *ev) {
+
+}
+
+
 
 
 /*
- ___ ____  _     _____
-|_ _|  _ \| |   | ____|
- | || | | | |   |  _|
- | || |_| | |___| |___
-|___|____/|_____|_____|
-*/
+ _____ ____  ____   ___  ____
+| ____|  _ \|  _ \ / _ \|  _ \
+|  _| | |_) | |_) | | | | |_) |
+| |___|  _ <|  _ <| |_| |  _ <
+|_____|_| \_\_| \_\\___/|_| \_\
+ */
 
-static void on_batt_level_x_idle(uint32_t data) {
-    printDebug(__func__, data);
-}
-static void on_tank_level_x_idle(uint32_t data) {
-    printDebug(__func__, data);
-}
-static void on_pump_rate_x_idle(uint32_t data) {
-    printDebug(__func__, data);
-}
-static void on_button_push_x_idle(uint32_t data) {
-    printDebug(__func__, data);
-}
-static void on_ev_calendar_x_idle(uint32_t data) {
-    printDebug(__func__, data);
-}
-static void on_timertick_x_idle(uint32_t data) {
-    printDebug(__func__, data);
-}
+static void on_button_push_x_error(str_event *ev) {
 
-static void on_batt_level_x_startup_batt(uint32_t data) {
-    printDebug(__func__, data);
 }
-static void on_tank_level_x_startup_tank(uint32_t data) {
-    printDebug(__func__, data);
-}
-static void on_timertick_x_startup_wait(uint32_t data) {
-}
-static void on_timertick_x_running(uint32_t data) {
-}
-static void on_calendar_x_running( uint32_t data) {
-}
-static void on_batt_level_x_run_read(uint32_t data) {
-}
-static void on_tank_level_x_run_read(uint32_t data) {
-}
-static void on_timertick_x_read_rate(uint32_t data) {
-}
+static void on_timertick_x_error(str_event *ev) {
 
-void printDebug(const uint8_t *func_name, uint32_t data) {
-    printf("%s data: %lu\r\n", func_name, data);
-}
-
-void debug2(const uint8_t *str) {
-    if(DEBUG/* && str != NULL*/) {
-        LCD_writeLine2(str);
-    }
-}
-void debug1(const uint8_t *str) {
-    if(DEBUG) {
-        LCD_writeLine1(str);
-    }
 }
 
 
+
+
+/*
+ ____ _____ _   _ _____ _____
+/ ___|_   _| | | |  ___|  ___|
+\___ \ | | | | | | |_  | |_
+ ___) || | | |_| |  _| |  _|
+|____/ |_|  \___/|_|   |_|
+ */
+
+uint8_t should_start() {
+    return FALSE;
+}
+
+void printDebug(const uint8_t *func_name, str_event * ev) {
+    printf("%s eventID: %d, data: %lu, epoch: %lu\r\n", func_name, ev->id, ev->data, ev->epoch);
+}
+
+static uint32_t helper_pump_rate() {
+
+}
 
