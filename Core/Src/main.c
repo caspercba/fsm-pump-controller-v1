@@ -14,7 +14,8 @@ str_fsm_configuration my_config = {
         10,
         00,
         16,
-        00
+        00,
+        TRUE
 };
 
 int main(void) {
@@ -29,7 +30,7 @@ int main(void) {
 
     while (1) {
         fsm_handle_events();
-        SYSTEM_delay(10);
+        SYSTEM_delay(100);
     }
 }
 

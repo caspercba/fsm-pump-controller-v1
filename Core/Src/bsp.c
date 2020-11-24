@@ -33,6 +33,7 @@ static void MX_I2C1_Init(void);
 static void MX_RTC_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_TIM6_Init(void);
+static void MX_TIM4_Init(void);
 void Error_Handler() {}
 
 static time_t getTimeStamp(RTC_TimeTypeDef*, RTC_DateTypeDef*, struct tm *);
@@ -44,6 +45,7 @@ RTC_HandleTypeDef hrtc;
 SPI_HandleTypeDef hspi1;
 TIM_HandleTypeDef htim6;
 UART_HandleTypeDef huart2;
+TIM_HandleTypeDef htim4;
 
 RTC_TimeTypeDef currentTime;
 RTC_DateTypeDef currentDate;
@@ -115,6 +117,7 @@ void SYSTEM_init(void) {
     MX_RTC_Init();
     MX_SPI1_Init();
     MX_TIM6_Init();
+    MX_TIM4_Init();
     LCD_init(&hi2c1);
     HAL_ADC_Start_IT(&hadc1);
     HAL_ADC_Start_IT(&hadc2);
@@ -145,8 +148,13 @@ static time_t getTimeEpoch() {
     return mktime(temp);
 }
 
-uint32_t SYSTEM_getEpoch() {
+time_t SYSTEM_getEpoch() {
     return getTimeEpoch();
+}
+
+struct tm * SYSTEM_getDifference(uint32_t past_epoch, uint32_t future_epoch) {
+    uint32_t seconds = difftime(mktime(future), mktime(past));
+    return
 }
 
 void SYSTEM_led_auto_set(uint8_t value) {
@@ -642,17 +650,41 @@ static void MX_GPIO_Init(void)
 //}
 
 //
-//static void MX_TIM4_Init(void) {
-//    __TIM3_CLK_ENABLE();
-//    tim4.Init.Prescaler = 12500;
-//    tim4.Init.CounterMode = TIM_COUNTERMODE_UP;
-//    tim4.Init.Period = 1000 / hw_config.tick_refresh_times_per_sec;
-//    tim4.Instance = TIM3;   //Same timer whose clocks we enabled
-//    HAL_TIM_Base_Init(&tim4);     // Init timer
-//    HAL_TIM_Base_Start_IT(&tim4); // start timer interrupts
-//    HAL_NVIC_SetPriority(TIM3_IRQn, 0, 1);
-//    HAL_NVIC_EnableIRQ(TIM3_IRQn);
-//}
+static void MX_TIM4_Init(void) {
+    /* USER CODE BEGIN TIM4_Init 0 */
+
+    /* USER CODE END TIM4_Init 0 */
+
+    TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+    TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+    /* USER CODE BEGIN TIM4_Init 1 */
+
+    /* USER CODE END TIM4_Init 1 */
+    htim4.Instance = TIM4;
+    htim4.Init.Prescaler = 0;
+    htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
+    htim4.Init.Period = 65535;
+    htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+    htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+    if (HAL_TIM_Base_Init(&htim4) != HAL_OK)
+    {
+        Error_Handler();
+    }
+    sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+    if (HAL_TIM_ConfigClockSource(&htim4, &sClockSourceConfig) != HAL_OK)
+    {
+        Error_Handler();
+    }
+    sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+    sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+    if (HAL_TIMEx_MasterConfigSynchronization(&htim4, &sMasterConfig) != HAL_OK)
+    {
+        Error_Handler();
+    }
+    HAL_NVIC_SetPriority(TIM4_IRQn, 0 , 1);
+    HAL_NVIC_EnableIRQ(TIM4_IRQn);
+}
 
 
 
@@ -680,18 +712,18 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef * htim_ref) {
     }
 }
 
-//void TIM3_IRQHandler(void) {
+//void HAL_TIM_IC_CaptureCallback(void) {
 //    //In case other interrupts are also running
-//    if (__HAL_TIM_GET_FLAG(&tim4, TIM_FLAG_UPDATE) != RESET) {
-//        if (__HAL_TIM_GET_ITSTATUS(&tim4, TIM_IT_UPDATE) != RESET) {
-//            __HAL_TIM_CLEAR_FLAG(&tim4, TIM_FLAG_UPDATE);
+//    if (__HAL_TIM_GET_FLAG(&htim4, TIM_FLAG_UPDATE) != RESET) {
+//        if (__HAL_TIM_GET_ITSTATUS(&htim4, TIM_IT_UPDATE) != RESET) {
+//            __HAL_TIM_CLEAR_FLAG(&htim4, TIM_FLAG_UPDATE);
 //            if (hw_config.callback_tick != NULL) {
 //                hw_config.callback_tick();
-//                timer_count++;
-//                if(timer_count > hw_config.tank_refresh_every_secs) {
-//                    timer_count = 0;
-//                    HAL_ADC_Start_IT(&hadc1);
-//                }
+////                timer_count++;
+////                if(timer_count > hw_config.tank_refresh_every_secs) {
+////                    timer_count = 0;
+////                    HAL_ADC_Start_IT(&hadc1);
+////                }
 //            }
 //        }
 //    }

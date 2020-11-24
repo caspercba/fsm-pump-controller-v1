@@ -18,6 +18,17 @@
 #define BTN_TYPE_BTN3 BTN_TYPE_BTN2 + 1
 #define BTN_TYPE_TOTAL BTN_TYPE_BTN3 + 1
 
+#define BTN_FORCE_START     BTN_TYPE_BTN0
+#define BTN_MODE            BTN_TYPE_BTN1
+#define BTN_AUTO            BTN_TYPE_BTN2
+#define BTN_CONFIG            BTN_TYPE_BTN3
+
+#define BTN_UP      BTN_TYPE_BTN1
+#define BTN_DOWN    BTN_TYPE_BTN2
+#define BTN_OK      BTN_TYPE_BTN0
+#define BTN_BACK    BTN_TYPE_BTN3
+
+
 
 /*
  ___ _   _ ___ _____
@@ -54,7 +65,7 @@ void SYSTEM_set_batt_millivolts_callback(void (*func) (uint32_t mVolts));
   |_| |___|_|  |_|_____|
 
  */
-uint32_t SYSTEM_getEpoch();
+time_t SYSTEM_getEpoch();
 struct tm *SYSTEM_getTimeDate();
 
 /*
