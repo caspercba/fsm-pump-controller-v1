@@ -78,7 +78,12 @@ void fsm_enqueue_event(str_event ev) {
 void fsm_handle_events() {
     str_event *next = queue_getNext();
 
+
+
     if(next != NULL) {
+#ifdef DEBUG
+        printf("ST: %02d, EV: %01d, data: %09d\r\n", currentState, next->id, next->data);
+#endif
         handler[currentState][next->id](next);
     }
 }
@@ -124,7 +129,7 @@ static void on_timertick_x_idle(str_event *ev) {
     bypass_checks = FALSE;
     error_msg = "";
 
-    if(check_batt_level() && check_time() && config->auto_enabled) {
+    if(check_batt_level() == TRUE && check_time() == TRUE && config->auto_enabled == TRUE) {
         SYSTEM_pump_set(TRUE);
         currentState = ST_START_WAIT_2MIN;
     } else {
@@ -167,22 +172,22 @@ time_t time_when_entered_startup = 0;
 
 static void on_timertick_x_startup(str_event *ev) {
     time_t now = SYSTEM_getEpoch();
-    struct tm * wait_time;
+    //time ( &now );
+    time_t wait_time = now - time_when_entered_startup;
     if(time_when_entered_startup == 0) {
         time_when_entered_startup = now;
-    } else if(now - time_when_entered_startup > 120) {
-
-
-        time ( &now );
-        wait_time = localtime ( &now );
+    } else if(wait_time > config->startup_wait_secs) {
 
         if(check_pump_rate()) {
             if(check_batt_level() && check_time()) {
                 currentState = ST_RUNNING;
+                time_when_entered_startup = 0;
             } else {
                 currentState = ST_IDLE;
+                time_when_entered_startup = 0;
             }
         } else {
+            time_when_entered_startup = 0;
             currentState = ST_ERROR;
             error_msg = "Check pump";
         }
@@ -204,12 +209,20 @@ static void on_timertick_x_startup(str_event *ev) {
  */
 
 static void on_button_push_x_running(str_event *ev) {
-
+    switch(ev->data) {
+        case BTN_MODE:
+            switch_mode();
+            break;
+        case BTN_FORCE_START:
+            SYSTEM_pump_set(FALSE);
+            currentState = ST_IDLE;
+            break;
+    }
 }
 static void on_timertick_x_running(str_event *ev) {
 
-    if(check_pump_rate()) {
-        if(check_batt_level() && check_time()) {
+    if(check_pump_rate() == TRUE || bypass_checks) {
+        if((check_batt_level() == TRUE && check_time() == TRUE) || bypass_checks) {
             SYSTEM_pump_set(TRUE);
             uint32_t tank_percent =
                     min((last_events[EV_TANK_LEVEL].data * 100) / config->tank_capacity_liters, 100);

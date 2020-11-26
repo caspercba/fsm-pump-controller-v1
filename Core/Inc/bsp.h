@@ -9,8 +9,9 @@
 #include <stdint-gcc.h>
 #include <time.h>
 
-#define TRUE 1
-#define FALSE 0
+#define TRUE 0
+#define FALSE 1
+//#define DEBUG
 
 #define BTN_TYPE_BTN0 0
 #define BTN_TYPE_BTN1 BTN_TYPE_BTN0 + 1
@@ -67,6 +68,9 @@ void SYSTEM_set_batt_millivolts_callback(void (*func) (uint32_t mVolts));
  */
 time_t SYSTEM_getEpoch();
 struct tm *SYSTEM_getTimeDate();
+void SYSTEM_setTime(uint8_t hour, uint8_t min, uint8_t sec);
+void SYSTEM_setDate(uint8_t day, uint8_t month, uint16_t year);
+
 
 /*
 _     _____ ____  ____

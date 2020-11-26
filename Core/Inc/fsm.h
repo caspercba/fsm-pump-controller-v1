@@ -26,7 +26,7 @@
 typedef struct {
     uint8_t id;
     uint32_t data;
-    uint32_t epoch;
+    time_t epoch;
 } str_event;
 
 
@@ -40,6 +40,7 @@ typedef struct {
     uint8_t stop_hour;
     uint8_t stop_min;
     uint8_t auto_enabled;
+    uint8_t startup_wait_secs;
 } str_fsm_configuration;
 
 void fsm_enqueue_event(str_event);

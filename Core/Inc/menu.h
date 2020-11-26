@@ -8,7 +8,14 @@
 
 #include "fsm.h"
 
-#define ST_CFG_START_HOUR       0
+#define ST_CFG_INIT             0
+#define ST_CFG_SET_DAY          ST_CFG_INIT + 1
+#define ST_CFG_SET_MONTH        ST_CFG_SET_DAY + 1
+#define ST_CFG_SET_YEAR         ST_CFG_SET_MONTH + 1
+#define ST_CFG_SET_HOUR         ST_CFG_SET_YEAR + 1
+#define ST_CFG_SET_MIN          ST_CFG_SET_HOUR + 1
+#define ST_CFG_SET_SEC          ST_CFG_SET_MIN + 1
+#define ST_CFG_START_HOUR       ST_CFG_SET_SEC + 1
 #define ST_CFG_START_MIN        ST_CFG_START_HOUR + 1
 #define ST_CFG_STOP_HOUR        ST_CFG_START_MIN + 1
 #define ST_CFG_STOP_MIN         ST_CFG_STOP_HOUR + 1

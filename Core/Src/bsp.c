@@ -33,10 +33,10 @@ static void MX_I2C1_Init(void);
 static void MX_RTC_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_TIM6_Init(void);
-static void MX_TIM4_Init(void);
 void Error_Handler() {}
 
 static time_t getTimeStamp(RTC_TimeTypeDef*, RTC_DateTypeDef*, struct tm *);
+
 
 ADC_HandleTypeDef hadc1;
 ADC_HandleTypeDef hadc2;
@@ -45,7 +45,6 @@ RTC_HandleTypeDef hrtc;
 SPI_HandleTypeDef hspi1;
 TIM_HandleTypeDef htim6;
 UART_HandleTypeDef huart2;
-TIM_HandleTypeDef htim4;
 
 RTC_TimeTypeDef currentTime;
 RTC_DateTypeDef currentDate;
@@ -70,7 +69,7 @@ typedef struct {
     void (*callback_tick) (void);
     uint32_t tank_liters_per_step;
     uint32_t tank_step_offset;
-    uint32_t millivolt_per_step_batt;
+    double millivolt_per_step_batt;
     uint8_t tick_refresh_times_per_sec;
     uint8_t tank_refresh_every_secs;
 } str_hw_config;
@@ -80,7 +79,7 @@ str_hw_config hw_config = {
          {GPIO_PIN_4, GPIOB},   // BTN_TYPE_BTN1
          {GPIO_PIN_5, GPIOB},   // BTN_TYPE_BTN2
          {GPIO_PIN_7, GPIOD}},  // BTN_TYPE_BTN3
-        {GPIO_PIN_5, GPIOD},
+        {GPIO_PIN_6, GPIOD},
         {LD5_Pin, GPIOD},
         {LD4_Pin, GPIOD},
         {LD3_Pin, GPIOD},
@@ -91,7 +90,7 @@ str_hw_config hw_config = {
         NULL,
         2,
         0,
-        41,
+        0.025,
         5,
         1
 };
@@ -111,16 +110,23 @@ void SYSTEM_init(void) {
     SystemClock_Config();
     MX_GPIO_Init();
     MX_ADC1_Init();
-    //MX_USART2_UART_Init();
-    MX_ADC2_Init();
+//#ifdef DBG
+    MX_USART2_UART_Init();
+//#else
     MX_I2C1_Init();
-    MX_RTC_Init();
-    MX_SPI1_Init();
-    MX_TIM6_Init();
-    MX_TIM4_Init();
     LCD_init(&hi2c1);
+//#endif
+
+
+    MX_ADC2_Init();
+
+    MX_RTC_Init();
+    //MX_SPI1_Init();
+    MX_TIM6_Init();
+
     HAL_ADC_Start_IT(&hadc1);
     HAL_ADC_Start_IT(&hadc2);
+    HAL_TIM_Base_Start_IT(&htim6);
 }
 
 void SYSTEM_delay(uint32_t delay) {
@@ -152,10 +158,10 @@ time_t SYSTEM_getEpoch() {
     return getTimeEpoch();
 }
 
-struct tm * SYSTEM_getDifference(uint32_t past_epoch, uint32_t future_epoch) {
-    uint32_t seconds = difftime(mktime(future), mktime(past));
-    return
-}
+//struct tm * SYSTEM_getDifference(uint32_t past, uint32_t future) {
+//    uint32_t seconds = difftime(mktime(future), mktime(past));
+//    return
+//}
 
 void SYSTEM_led_auto_set(uint8_t value) {
     setPin(&hw_config.led_auto_on, value);
@@ -186,6 +192,21 @@ struct tm *SYSTEM_getTimeDate() {
     tm_last_result.tm_mon = currentDate.Month;
     tm_last_result.tm_year = currentDate.Year + 2000;
     return &tm_last_result;
+}
+
+void SYSTEM_setTime(uint8_t hour, uint8_t min, uint8_t sec) {
+    RTC_TimeTypeDef time;
+    time.Hours = hour;
+    time.Minutes = min;
+    time.Seconds = sec;
+    HAL_RTC_SetTime(&hrtc, &time, RTC_FORMAT_BIN);
+}
+void SYSTEM_setDate(uint8_t day, uint8_t month, uint16_t year) {
+    RTC_DateTypeDef date;
+    date.Year = year;
+    date.Month = month;
+    date.Date = day;
+    HAL_RTC_SetDate(&hrtc, &date, RTC_FORMAT_BIN);
 }
 
 
@@ -241,10 +262,23 @@ void SystemClock_Config(void)
     }
 }
 
+/**
+  * @brief ADC1 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_ADC1_Init(void)
 {
+
+    /* USER CODE BEGIN ADC1_Init 0 */
+
+    /* USER CODE END ADC1_Init 0 */
+
     ADC_ChannelConfTypeDef sConfig = {0};
 
+    /* USER CODE BEGIN ADC1_Init 1 */
+
+    /* USER CODE END ADC1_Init 1 */
     /** Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
     */
     hadc1.Instance = ADC1;
@@ -258,7 +292,7 @@ static void MX_ADC1_Init(void)
     hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
     hadc1.Init.NbrOfConversion = 1;
     hadc1.Init.DMAContinuousRequests = DISABLE;
-    hadc1.Init.EOCSelection = ADC_EOC_SEQ_CONV;
+    hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
     if (HAL_ADC_Init(&hadc1) != HAL_OK)
     {
         Error_Handler();
@@ -272,9 +306,17 @@ static void MX_ADC1_Init(void)
     {
         Error_Handler();
     }
+    /* USER CODE BEGIN ADC1_Init 2 */
+
+    /* USER CODE END ADC1_Init 2 */
 
 }
 
+/**
+  * @brief ADC2 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_ADC2_Init(void)
 {
 
@@ -300,7 +342,7 @@ static void MX_ADC2_Init(void)
     hadc2.Init.DataAlign = ADC_DATAALIGN_RIGHT;
     hadc2.Init.NbrOfConversion = 1;
     hadc2.Init.DMAContinuousRequests = DISABLE;
-    hadc2.Init.EOCSelection = ADC_EOC_SEQ_CONV;
+    hadc2.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
     if (HAL_ADC_Init(&hadc2) != HAL_OK)
     {
         Error_Handler();
@@ -320,6 +362,11 @@ static void MX_ADC2_Init(void)
 
 }
 
+/**
+  * @brief I2C1 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_I2C1_Init(void)
 {
 
@@ -349,6 +396,11 @@ static void MX_I2C1_Init(void)
 
 }
 
+/**
+  * @brief RTC Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_RTC_Init(void)
 {
 
@@ -378,6 +430,11 @@ static void MX_RTC_Init(void)
 
 }
 
+/**
+  * @brief SPI1 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_SPI1_Init(void)
 {
 
@@ -411,6 +468,7 @@ static void MX_SPI1_Init(void)
 
 }
 
+
 static void MX_TIM6_Init(void)
 {
 
@@ -424,9 +482,9 @@ static void MX_TIM6_Init(void)
 
     /* USER CODE END TIM6_Init 1 */
     htim6.Instance = TIM6;
-    htim6.Init.Prescaler = 0;
+    htim6.Init.Prescaler = 8400;
     htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-    htim6.Init.Period = 10;
+    htim6.Init.Period = 1000;
     htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
     if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
     {
@@ -438,11 +496,17 @@ static void MX_TIM6_Init(void)
     {
         Error_Handler();
     }
-
-    //__NVIC_EnableIRQ(TIM6_DAC_IRQn);
+    /* USER CODE BEGIN TIM6_Init 2 */
+    /* USER CODE END TIM6_Init 2 */
 
 }
 
+
+/**
+  * @brief USART2 Initialization Function
+  * @param None
+  * @retval None
+  */
 static void MX_USART2_UART_Init(void)
 {
 
@@ -487,10 +551,11 @@ static void MX_GPIO_Init(void)
 
 
     // configure buttons
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
     for(int i=0; i < BTN_TYPE_TOTAL ; i++) {
-        GPIO_InitStruct.Pin = hw_config.buttons->pin;
-        GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-        GPIO_InitStruct.Pull = GPIO_NOPULL;
+        GPIO_InitStruct.Pin = hw_config.buttons[i].pin;
         HAL_GPIO_Init(hw_config.buttons[i].gpioTypeDef, &GPIO_InitStruct);
     }
 
@@ -528,215 +593,34 @@ static void MX_GPIO_Init(void)
     GPIO_InitStruct.Pin = LD4_Pin|LD3_Pin|LD5_Pin|LD6_Pin;
     HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
-    HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(EXTI0_IRQn);
-
     HAL_NVIC_SetPriority(EXTI3_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(EXTI3_IRQn);
 
+    HAL_NVIC_SetPriority(EXTI4_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(EXTI4_IRQn);
+
+    HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-///**
-//  * @brief GPIO Initialization Function
-//  * @param None
-//  * @retval None
-//  */
-//static void MX_GPIO_Init(void)
-//{
-//
-//    __HAL_RCC_GPIOD_CLK_ENABLE();
-//    __HAL_RCC_GPIOE_CLK_ENABLE();
-//
-//    GPIO_InitTypeDef GPIO_InitStruct = {0};
-//
-//    GPIO_InitStruct.Pin = hw_config.buttons[BTN_TYPE_START].pin;
-//    GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-//    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-//    GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
-//    HAL_GPIO_Init(hw_config.buttons[BTN_TYPE_START].gpioTypeDef, &GPIO_InitStruct);
-//
-//    GPIO_InitStruct.Pin = hw_config.buttons[BTN_TYPE_STOP].pin;
-//    GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-//    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-//    GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
-//    HAL_GPIO_Init(hw_config.buttons[BTN_TYPE_STOP].gpioTypeDef, &GPIO_InitStruct);
-//
-//    GPIO_InitStruct.Pin = hw_config.buttons[BTN_TYPE_AUTO].pin;
-//    GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-//    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-//    GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
-//    HAL_GPIO_Init(hw_config.buttons[BTN_TYPE_AUTO].gpioTypeDef, &GPIO_InitStruct);
-//
-//    GPIO_InitStruct.Pin = hw_config.pump.pin;
-//    GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
-//    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-//    GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
-//    HAL_GPIO_Init(hw_config.pump.gpioTypeDef, &GPIO_InitStruct);
-//
-//    GPIO_InitStruct.Pin = hw_config.led_pump_run.pin;
-//    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-//    GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-//    GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
-//    HAL_GPIO_Init(hw_config.led_pump_run.gpioTypeDef, &GPIO_InitStruct);
-//
-//    HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
-//    HAL_NVIC_EnableIRQ(EXTI0_IRQn);
-//
-//    HAL_NVIC_SetPriority(EXTI3_IRQn, 0, 0);
-//    HAL_NVIC_EnableIRQ(EXTI3_IRQn);
-//
-//}
-
-
-
-//static void MX_SPI1_Init(void)
-//{
-//    hspi1.Instance = SPI1;
-//    hspi1.Init.Mode = SPI_MODE_MASTER;
-//    hspi1.Init.Direction = SPI_DIRECTION_2LINES;
-//    hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
-//    hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
-//    hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
-//    hspi1.Init.NSS = SPI_NSS_SOFT;
-//    hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
-//    hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
-//    hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
-//    hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
-//    hspi1.Init.CRCPolynomial = 10;
-//    if (HAL_SPI_Init(&hspi1) != HAL_OK)
-//    {
-//        Error_Handler();
-//    }
-//}
-
-//static void MX_USART2_UART_Init(void) {
-//    huart2.Instance = USART2;
-//    huart2.Init.BaudRate = 115200;
-//    huart2.Init.WordLength = UART_WORDLENGTH_8B;
-//    huart2.Init.StopBits = UART_STOPBITS_1;
-//    huart2.Init.Parity = UART_PARITY_NONE;
-//    huart2.Init.Mode = UART_MODE_TX_RX;
-//    huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-//    huart2.Init.OverSampling = UART_OVERSAMPLING_16;
-//    if (HAL_UART_Init(&huart2) != HAL_OK) {
-//        Error_Handler();
-//    }
-//}
-
-//
-static void MX_TIM4_Init(void) {
-    /* USER CODE BEGIN TIM4_Init 0 */
-
-    /* USER CODE END TIM4_Init 0 */
-
-    TIM_ClockConfigTypeDef sClockSourceConfig = {0};
-    TIM_MasterConfigTypeDef sMasterConfig = {0};
-
-    /* USER CODE BEGIN TIM4_Init 1 */
-
-    /* USER CODE END TIM4_Init 1 */
-    htim4.Instance = TIM4;
-    htim4.Init.Prescaler = 0;
-    htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
-    htim4.Init.Period = 65535;
-    htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
-    htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-    if (HAL_TIM_Base_Init(&htim4) != HAL_OK)
-    {
-        Error_Handler();
-    }
-    sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
-    if (HAL_TIM_ConfigClockSource(&htim4, &sClockSourceConfig) != HAL_OK)
-    {
-        Error_Handler();
-    }
-    sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
-    sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-    if (HAL_TIMEx_MasterConfigSynchronization(&htim4, &sMasterConfig) != HAL_OK)
-    {
-        Error_Handler();
-    }
-    HAL_NVIC_SetPriority(TIM4_IRQn, 0 , 1);
-    HAL_NVIC_EnableIRQ(TIM4_IRQn);
-}
-
-
-
-
-void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef * htim_ref) {
-    if (__HAL_TIM_GET_FLAG(htim_ref, TIM_FLAG_UPDATE) != RESET) {
-        if (__HAL_TIM_GET_IT_SOURCE(htim_ref, TIM_IT_UPDATE) != RESET) {
-            __HAL_TIM_CLEAR_FLAG(htim_ref, TIM_FLAG_UPDATE);
-
-
-            if (hw_config.callback_tick != NULL) {
-                hw_config.callback_tick();
-//                timer_count++;
-//                if(timer_count > hw_config.tank_refresh_every_secs) {
-//                    timer_count = 0;
-//                    HAL_ADC_Start_IT(&hadc1);
-//                }
-            }
-
-
-            HAL_TIM_PeriodElapsedCallback(htim_ref);
-
-
-        }
-    }
-}
-
-//void HAL_TIM_IC_CaptureCallback(void) {
-//    //In case other interrupts are also running
-//    if (__HAL_TIM_GET_FLAG(&htim4, TIM_FLAG_UPDATE) != RESET) {
-//        if (__HAL_TIM_GET_ITSTATUS(&htim4, TIM_IT_UPDATE) != RESET) {
-//            __HAL_TIM_CLEAR_FLAG(&htim4, TIM_FLAG_UPDATE);
-//            if (hw_config.callback_tick != NULL) {
-//                hw_config.callback_tick();
-////                timer_count++;
-////                if(timer_count > hw_config.tank_refresh_every_secs) {
-////                    timer_count = 0;
-////                    HAL_ADC_Start_IT(&hadc1);
-////                }
-//            }
-//        }
-//    }
-//}
+uint8_t last_button = -1;
+time_t last_button_time = 0;
 
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     for(int i = 0 ; i < BTN_TYPE_TOTAL ; i++) {
-        if(hw_config.buttons->pin == GPIO_Pin && hw_config.callback_button != NULL) {
-            hw_config.callback_button(i);
+        if(hw_config.buttons[i].pin == GPIO_Pin && hw_config.callback_button != NULL) {
+            if(last_button == hw_config.buttons[i].pin &&
+                    (SYSTEM_getEpoch() - last_button_time) * 1000 < 5) {
+
+            } else {
+                hw_config.callback_button(i);
+            }
+            last_button = hw_config.buttons[i].pin;
+            last_button_time = SYSTEM_getEpoch();
         }
     }
 }
-
 
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc_ref) {
     uint32_t value = HAL_ADC_GetValue(hadc_ref);
@@ -745,11 +629,23 @@ void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc_ref) {
             uint32_t tank_liters = (value - hw_config.tank_step_offset) * hw_config.tank_liters_per_step;
             hw_config.callback_tank_liters(tank_liters);
         }
-    } else if(hadc_ref == &hadc2) {
+    } else if(hadc_ref == &hadc2 ) {
         if(hw_config.callback_batt_volts != NULL) {
             hw_config.callback_batt_volts(value * hw_config.millivolt_per_step_batt);
         }
     }
+}
+
+uint8_t counter = 0;
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+    if(htim == &htim6 && hw_config.callback_tick != NULL) {
+        hw_config.callback_tick();
+        if(counter % 10 == 0) {
+            HAL_ADC_Start_IT(&hadc1);
+            HAL_ADC_Start_IT(&hadc2);
+        }
+    }
+    counter++;
 }
 
 

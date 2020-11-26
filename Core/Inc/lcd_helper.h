@@ -18,7 +18,7 @@
 void switch_mode(void);
 
 void LCDH_idle(struct tm * time_now, uint32_t tank, uint32_t batt, uint32_t tank_percent);
-void LCDH_waiting(struct tm * wait_time, uint32_t pump_rate);
+void LCDH_waiting(time_t wait_time, uint32_t pump_rate);
 void LCDH_running(struct tm * time_now, uint32_t tank, uint32_t batt, uint32_t tank_percent, uint32_t pump_rate);
 void LCDH_error(uint8_t * msg);
 

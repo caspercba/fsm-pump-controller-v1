@@ -55,13 +55,13 @@ void LCDH_idle(struct tm * time_now, uint32_t tank, uint32_t batt, uint32_t tank
 
  */
 
-void LCDH_waiting(struct tm * wait_time, uint32_t pump_rate) {
+void LCDH_waiting(time_t wait_time, uint32_t pump_rate) {
     LCD_clear();
     switch(mode) {
         case MODE0:
         case MODE1:
             LCD_setCursor(0,0);
-            LCD_printf("WAIT: %02d:%02d", wait_time->tm_min, wait_time->tm_sec);
+            LCD_printf("WAIT: %f:%f", wait_time, wait_time);
             LCD_setCursor(1,0);
             LCD_printf("PUMP: %03d l/min", pump_rate);
             break;
