@@ -4,39 +4,37 @@
 
 #include "lcd_helper.h"
 
-#define MODE0       0
-#define MODE1       MODE0 + 1
-//#define MODE2       MODE1 + 1
-//#define NMODES      MODE2 + 1
-#define NMODES      MODE1 + 1
 
-#define MODEDURATION    20      // ticks
+uint8_t mode = MODE0;
 
-
+void switch_mode(void) {
+    mode++;
+    if(mode >= NMODES) mode = 0;
+}
 
 
 
-uint8_t state = 0;
-uint8_t ticks = 0;
 
-void show_idle(struct tm * time, uint32_t tank, uint32_t batt, uint32_t tank_percent) {
+/*
+ ___ ____  _     _____
+|_ _|  _ \| |   | ____|
+ | || | | | |   |  _|
+ | || |_| | |___| |___
+|___|____/|_____|_____|
+*/
+
+void LCDH_idle(struct tm * time_now, uint32_t tank, uint32_t batt, uint32_t tank_percent) {
     LCD_clear();
-    switch (state) {
+    switch (mode) {
         case MODE0:
             LCD_setCursor(0,0);
             LCD_printf("IDLE");
             LCD_setCursor(1,6);
-            LCD_printf("%02d/%02d/%02d", time->tm_mday, time->tm_mon, time->tm_year);
+            LCD_printf("%02d/%02d/%02d", time_now->tm_mday, time_now->tm_mon, time_now->tm_year);
             LCD_setCursor(0,8);
-            LCD_printf("%02d:%02d:%02d", time->tm_hour, time->tm_min, time->tm_sec);
+            LCD_printf("%02d:%02d:%02d", time_now->tm_hour, time_now->tm_min, time_now->tm_sec);
             break;
         case MODE1:
-//            LCD_setCursor(0,0);
-//            LCD_printf("Next Start in", 10);
-//            LCD_setCursor(1,0);
-//            LCD_printf("%02dh %02dm", 10, 20);
-//            break;
-//        case MODE2:
             LCD_setCursor(0,0);
             LCD_printf("%04dL %03d%%", tank, tank_percent);
             LCD_setCursor(1,0);
@@ -46,44 +44,79 @@ void show_idle(struct tm * time, uint32_t tank, uint32_t batt, uint32_t tank_per
         default:
             break;
     }
-
-    if(ticks >= MODEDURATION) {
-        state++;
-        ticks = 0;
-    }
-    if(state >= NMODES) state = 0;
-
-//    state = MODE2;
-
-    ticks++;
 }
 
-void show_running(uint32_t pump_rate, uint32_t liters, uint32_t fill_percent) {
+/*
+ ____ _____  __        ___    ___ _____   ____  __  __ ___ _   _
+/ ___|_   _| \ \      / / \  |_ _|_   _| |___ \|  \/  |_ _| \ | |
+\___ \ | |    \ \ /\ / / _ \  | |  | |     __) | |\/| || ||  \| |
+ ___) || |     \ V  V / ___ \ | |  | |    / __/| |  | || || |\  |
+|____/ |_|      \_/\_/_/   \_\___| |_|   |_____|_|  |_|___|_| \_|
+
+ */
+
+void LCDH_waiting(time_t wait_time, uint32_t pump_rate) {
     LCD_clear();
-    switch (state) {
-        case 0:
+    switch(mode) {
+        case MODE0:
+        case MODE1:
+            LCD_setCursor(0,0);
+            LCD_printf("WAIT: %f:%f", wait_time, wait_time);
+            LCD_setCursor(1,0);
+            LCD_printf("PUMP: %03d l/min", pump_rate);
+            break;
+    }
+}
+
+/*
+ ____  _   _ _   _ _   _ ___ _   _  ____
+|  _ \| | | | \ | | \ | |_ _| \ | |/ ___|
+| |_) | | | |  \| |  \| || ||  \| | |  _
+|  _ <| |_| | |\  | |\  || || |\  | |_| |
+|_| \_\\___/|_| \_|_| \_|___|_| \_|\____|
+
+ */
+
+void LCDH_running(struct tm * time_now,
+        uint32_t tank,
+        uint32_t batt,
+        uint32_t tank_percent,
+        uint32_t pump_rate) {
+
+    LCD_clear();
+    switch (mode) {
+        case MODE0:
             LCD_setCursor(0,0);
             LCD_printf("RUNNING");
             LCD_setCursor(0,9);
-            LCD_printf("%03d\%", fill_percent);
+            LCD_printf("%03d\%", tank_percent);
             LCD_setCursor(1,0);
             LCD_printf("rate(L/m) %02d", pump_rate);
             break;
-        case 1:
+        case MODE1:
             LCD_setCursor(0,0);
             LCD_printf("RUNNING");
+            LCD_setCursor(0,9);
+            LCD_printf("%02d%L", tank);
             LCD_setCursor(1,0);
-            LCD_printf("liters %02d%", liters);
+            LCD_printf("04&d l/m");
             break;
     }
-    if(ticks >= MODEDURATION) {
-        state++;
-        ticks = 0;
-    }
-    if(state >= NMODES) state = 0;
+}
 
-    ticks++;
-
+/*
+ _____ ____  ____   ___  ____
+| ____|  _ \|  _ \ / _ \|  _ \
+|  _| | |_) | |_) | | | | |_) |
+| |___|  _ <|  _ <| |_| |  _ <
+|_____|_| \_\_| \_\\___/|_| \_\
+ */
+void LCDH_error(uint8_t * msg) {
+    LCD_clear();
+    LCD_setCursor(0,0);
+    LCD_printf("ERROR");
+    LCD_setCursor(1,0);
+    LCD_printf(msg);
 }
 
 

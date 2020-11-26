@@ -9,13 +9,26 @@
 #include <stdint-gcc.h>
 #include <time.h>
 
-#define TRUE 1
-#define FALSE 0
+#define TRUE 0
+#define FALSE 1
+//#define DEBUG
 
-#define BTN_TYPE_START 0
-#define BTN_TYPE_STOP BTN_TYPE_START + 1
-#define BTN_TYPE_AUTO BTN_TYPE_STOP + 1
-#define BTN_TYPE_TOTAL BTN_TYPE_AUTO + 1
+#define BTN_TYPE_BTN0 0
+#define BTN_TYPE_BTN1 BTN_TYPE_BTN0 + 1
+#define BTN_TYPE_BTN2 BTN_TYPE_BTN1 + 1
+#define BTN_TYPE_BTN3 BTN_TYPE_BTN2 + 1
+#define BTN_TYPE_TOTAL BTN_TYPE_BTN3 + 1
+
+#define BTN_FORCE_START     BTN_TYPE_BTN0
+#define BTN_MODE            BTN_TYPE_BTN1
+#define BTN_AUTO            BTN_TYPE_BTN2
+#define BTN_CONFIG            BTN_TYPE_BTN3
+
+#define BTN_UP      BTN_TYPE_BTN1
+#define BTN_DOWN    BTN_TYPE_BTN2
+#define BTN_OK      BTN_TYPE_BTN0
+#define BTN_BACK    BTN_TYPE_BTN3
+
 
 
 /*
@@ -53,8 +66,11 @@ void SYSTEM_set_batt_millivolts_callback(void (*func) (uint32_t mVolts));
   |_| |___|_|  |_|_____|
 
  */
-uint32_t SYSTEM_getEpoch();
+time_t SYSTEM_getEpoch();
 struct tm *SYSTEM_getTimeDate();
+void SYSTEM_setTime(uint8_t hour, uint8_t min, uint8_t sec);
+void SYSTEM_setDate(uint8_t day, uint8_t month, uint16_t year);
+
 
 /*
 _     _____ ____  ____

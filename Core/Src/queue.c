@@ -34,6 +34,11 @@ str_event *queue_getNext() {
 
     if(read >= event_buff + CIRCULAR_BUFF_SIZE) read = event_buff;
     data_size--;
+
+    printf("QUEUE: %02d\r\n", data_size);
+    str_event *result = read;
+    read++;
+    if(read >= event_buff + CIRCULAR_BUFF_SIZE) read = event_buff;
     printf("queue pending events: %d\r\n", data_size);
-    return read;
+    return result;
 }

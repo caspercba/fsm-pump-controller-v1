@@ -13,7 +13,8 @@
 #define ST_START_WAIT_2MIN      ST_IDLE + 1
 #define ST_RUNNING              ST_START_WAIT_2MIN + 1
 #define ST_ERROR                ST_RUNNING + 1
-#define ST_TOTAL                ST_ERROR + 1
+#define ST_CONFIG               ST_ERROR + 1
+#define ST_TOTAL                ST_CONFIG + 1
 
 #define EV_BATT_LEVEL           0
 #define EV_TANK_LEVEL           EV_BATT_LEVEL + 1
@@ -25,7 +26,7 @@
 typedef struct {
     uint8_t id;
     uint32_t data;
-    uint32_t epoch;
+    time_t epoch;
 } str_event;
 
 
@@ -38,6 +39,8 @@ typedef struct {
     uint8_t start_min;
     uint8_t stop_hour;
     uint8_t stop_min;
+    uint8_t auto_enabled;
+    uint8_t startup_wait_secs;
 } str_fsm_configuration;
 
 void fsm_enqueue_event(str_event);
