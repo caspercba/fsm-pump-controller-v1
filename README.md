@@ -1,4 +1,4 @@
-# fsm-pump-controller-v1
+# Finite State Machine Pump Controller v1
 
 ## Introduction
 This application is intended for the STM32F407G Discovery board. It is an automatic pump controller that reads via ADC the current battery voltage and 
