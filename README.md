@@ -70,7 +70,7 @@ PUTCHAR_PROTOTYPE
 
 ```
 
-## The future plans
+## Plans for the future
 I'm in the process of developing a new version that will work on FreeRTOS. Considering that I designed this application in a multi-threaded manner, it makes
 sense to migrate it to FreeRTOS. But dont worry, this project will stay here for future references. It will probably be started as a fork instead.
 
