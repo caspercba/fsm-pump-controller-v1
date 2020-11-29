@@ -9,6 +9,7 @@
 #include "bsp.h"
 #include "lcdhitachi.h"
 #include "main.h"
+#include "eeprom.h"
 
 
 // DEBUG STUFF
@@ -49,6 +50,7 @@ UART_HandleTypeDef huart2;
 RTC_TimeTypeDef currentTime;
 RTC_DateTypeDef currentDate;
 struct tm tm_last_result;
+uint16_t VirtAddVarTab[NB_OF_VAR] = {0x0, 0x6666, 0x7777};
 
 
 typedef struct {
@@ -127,6 +129,12 @@ void SYSTEM_init(void) {
     HAL_ADC_Start_IT(&hadc1);
     HAL_ADC_Start_IT(&hadc2);
     HAL_TIM_Base_Start_IT(&htim6);
+    HAL_FLASH_Unlock();
+
+    if( EE_Init() != EE_OK)
+    {
+        Error_Handler();
+    }
 }
 
 void SYSTEM_delay(uint32_t delay) {
@@ -207,6 +215,60 @@ void SYSTEM_setDate(uint8_t day, uint8_t month, uint16_t year) {
     date.Month = month;
     date.Date = day;
     HAL_RTC_SetDate(&hrtc, &date, RTC_FORMAT_BIN);
+}
+
+void SYSTEM_save(str_fsm_configuration* data){
+
+    uint16_t c_addr = 0;
+    EE_WriteVariable(c_addr, data->tank_capacity_liters);
+    c_addr+=16;
+    EE_WriteVariable(c_addr, data->tank_min_liters);
+    c_addr+=16;
+    EE_WriteVariable(c_addr, data->pump_min_rate_liters_per_min);
+    c_addr+=16;
+    EE_WriteVariable(c_addr, (uint32_t) (data->batt_min_millivolts & 0xFFFF));
+    c_addr+=16;
+    EE_WriteVariable(c_addr, (uint32_t) (data->batt_min_millivolts>>16));
+    c_addr+=16;
+    EE_WriteVariable(c_addr, data->start_hour);
+    c_addr+=16;
+    EE_WriteVariable(c_addr, data->start_min);
+    c_addr+=16;
+    EE_WriteVariable(c_addr, data->stop_hour);
+    c_addr+=16;
+    EE_WriteVariable(c_addr, data->stop_min);
+    c_addr+=16;
+    EE_WriteVariable(c_addr, data->auto_enabled);
+    c_addr+=16;
+    EE_WriteVariable(c_addr, data->startup_wait_secs);
+
+}
+void SYSTEM_read(str_fsm_configuration* data) {
+    uint16_t c_addr = 0;
+    EE_ReadVariable(c_addr, &data->tank_capacity_liters);
+    c_addr+=16;
+    EE_ReadVariable(c_addr, &data->tank_min_liters);
+    c_addr+=16;
+    EE_ReadVariable(c_addr, &data->pump_min_rate_liters_per_min);
+    c_addr+=16;
+    uint16_t volts = 0;
+    EE_ReadVariable(c_addr, &volts);
+    c_addr+=16;
+    data->batt_min_millivolts = volts;
+    EE_ReadVariable(c_addr, &volts);
+    c_addr+=16;
+    data->batt_min_millivolts = data->batt_min_millivolts | volts << 16;
+    EE_ReadVariable(c_addr, &data->start_hour);
+    c_addr+=16;
+    EE_ReadVariable(c_addr, &data->start_min);
+    c_addr+=16;
+    EE_ReadVariable(c_addr, &data->stop_hour);
+    c_addr+=16;
+    EE_ReadVariable(c_addr, &data->stop_min);
+    c_addr+=16;
+    EE_ReadVariable(c_addr, &data->auto_enabled);
+    c_addr+=16;
+    EE_ReadVariable(c_addr, &data->startup_wait_secs);
 }
 
 

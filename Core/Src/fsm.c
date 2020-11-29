@@ -279,6 +279,7 @@ static void on_timertick_x_error(str_event *ev) {
 
 static void on_button_push_x_config(str_event* ev ) {
     if(MENU_handle_button(ev->data) == FALSE) {
+        SYSTEM_save(config);
         currentState = ST_IDLE;
     }
 }

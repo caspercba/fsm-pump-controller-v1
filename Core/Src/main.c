@@ -7,11 +7,11 @@ void tank_callback(uint32_t liters);
 void batt_callback(uint32_t mVolts);
 
 str_fsm_configuration my_config = {
-        8000,
+        1000,
         5000,
         25,
         48000,
-        12,
+        11,
         00,
         16,
         00,
@@ -26,6 +26,8 @@ int main(void) {
     SYSTEM_set_tick_callback(tick_callback);
     SYSTEM_set_tank_liters_callback(tank_callback);
     SYSTEM_set_batt_millivolts_callback(batt_callback);
+
+    //SYSTEM_save(&my_config);
 
     fsm_set_config(&my_config);
 

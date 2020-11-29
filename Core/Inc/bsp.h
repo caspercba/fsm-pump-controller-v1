@@ -30,6 +30,19 @@
 #define BTN_BACK    BTN_TYPE_BTN3
 
 
+typedef struct {
+    uint16_t tank_capacity_liters;
+    uint16_t tank_min_liters;
+    uint16_t pump_min_rate_liters_per_min;
+    uint32_t batt_min_millivolts;
+    uint8_t start_hour;
+    uint8_t start_min;
+    uint8_t stop_hour;
+    uint8_t stop_min;
+    uint8_t auto_enabled;
+    uint8_t startup_wait_secs;
+} str_fsm_configuration;
+
 
 /*
  ___ _   _ ___ _____
@@ -97,7 +110,8 @@ uint8_t SYSTEM_led_auto_is_on();
  uint8_t SYSTEM_pump_is_on();
 void SYSTEM_pump_set(uint8_t val);
 
-
+void SYSTEM_save(str_fsm_configuration* data);
+void SYSTEM_read(str_fsm_configuration* data);
 
 
 

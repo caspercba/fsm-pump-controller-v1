@@ -29,20 +29,6 @@ typedef struct {
     time_t epoch;
 } str_event;
 
-
-typedef struct {
-    uint16_t tank_capacity_liters;
-    uint16_t tank_min_liters;
-    uint16_t pump_min_rate_liters_per_min;
-    uint32_t batt_min_millivolts;
-    uint8_t start_hour;
-    uint8_t start_min;
-    uint8_t stop_hour;
-    uint8_t stop_min;
-    uint8_t auto_enabled;
-    uint8_t startup_wait_secs;
-} str_fsm_configuration;
-
 void fsm_enqueue_event(str_event);
 void fsm_handle_events();
 void fsm_set_config(str_fsm_configuration *config);

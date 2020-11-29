@@ -286,6 +286,7 @@ static void draw() {
 
 void MENU_init(str_fsm_configuration* cfg) {
     config = cfg;
+    SYSTEM_read(config);
 }
 
 uint8_t MENU_handle_button(uint32_t button) {
