@@ -29,6 +29,9 @@ auto shutdown. Maybe it would be wise to add a flow sensor instead of relying on
 
 Create a robust app that allows easy threading and layer separation between the logic and the hardware board.
 
+### EEPROM Emulation
+There was a huge need of saving the pump controller paramenters inside the internal flash memory. Following the code writen in https://github.com/PaxInstruments/STM32CubeF4/tree/79f9886354dc7a82e67f925dc1c20d027f9e94ad/Projects/STM32F4-Discovery/Applications/EEPROM/EEPROM_Emulation I managed to implement my own save/restore routines. I had to move the start address of the flash storage further away since my code was already taking roughly 120kb of flash. Then just saved every param in blocks of 16bits. Bigger variables were stored in several parts, while smaller data (8 bit) were just saved in 16bit places to avoid hassle. This is not as efficient as it could be, but enough for now.
+
 ### Layers: 
 Theres a bottom layer called bsp.c that implements the interface bsp.h. This interface provides all the necessary services to the top layers so they
 can decide the logic. This separation allows future migration to other platforms.
@@ -71,8 +74,9 @@ PUTCHAR_PROTOTYPE
 ```
 
 ## Plans for the future
-I'm in the process of developing a new version that will work on FreeRTOS. Considering that I designed this application in a multi-threaded manner, it makes
-sense to migrate it to FreeRTOS. But dont worry, this project will stay here for future references. It will probably be started as a fork instead.
+### FreeRTOS: Migration to FreeRTOS for educational purposes
+### Bluepill: Create a smaller version so we make this project a bit more affordable.
+### WIFI: Add a wifi module (ESP8266 OR ESP32 like) so we can send / receive commands to a remote management system like home assistant.
 
 
 ## Notes
